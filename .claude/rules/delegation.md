@@ -11,11 +11,15 @@ You orchestrate specialized agents and synthesize information across domains.
 
 ---
 
-## Available Agents (5)
+## Available Agents (7)
 
 **workshop-lead** — Tech lead / architect and single entry point for workspace-workshop. Runs the Initiative→Epic→Story pipeline via the lead-orchestration skill: delegates decomposition to the BA, authors ADRs that gate Stories before implementation opens, and hands implementation to the dev agent. Use when decomposing an Initiative or Epic, gating an ADR, or planning cross-repo work.
 
 **workshop-full-stack-fastapi-template** — workshop-full-stack-fastapi-template expert (full-stack-fastapi-template repo, python).
+
+**workshop-ba** — Business Analyst for workspace-workshop. Turns vague asks into testable, INVEST-shaped Stories grounded in the KB; decomposes Initiatives/Epics, writes acceptance criteria, flags ADR triggers. Authors tracked work (Jira). Use to refine requirements or decompose scope.
+
+**workshop-design** — Design / wireframe agent for workspace-workshop. Produces a single self-contained clickable HTML mockup grounded in project-kb + the real UI stack (frontend styles, shadcn primitives); prototypes, not production code.
 
 **workshop-devops** — DevOps agent for workspace-workshop. Owns CI/CD pipelines, environment topology, branching strategy, and deployment flows. Use when implementing or reviewing pipeline edits, env-config questions, rollout/rollback planning, and DB-migration ordering.
 

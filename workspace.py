@@ -63,12 +63,60 @@ GITHUB_RW_TOOLS = [
     'mcp__github__search_users',
 ]
 
+# Jira (Data Center via uvx mcp-atlassian) — names mirror
+# artisyn_catalog_schema/bootstrap/mcp_servers/atlassian.py. The server key in
+# .mcp.json ("atlassian-da-jira") must match this tool-name prefix exactly.
+JIRA_RW_TOOLS = [
+    'mcp__atlassian-da-jira__jira_get_issue',
+    'mcp__atlassian-da-jira__jira_search',
+    'mcp__atlassian-da-jira__jira_search_fields',
+    'mcp__atlassian-da-jira__jira_add_comment',
+    'mcp__atlassian-da-jira__jira_edit_comment',
+    'mcp__atlassian-da-jira__jira_update_issue',
+    'mcp__atlassian-da-jira__jira_get_transitions',
+    'mcp__atlassian-da-jira__jira_transition_issue',
+    'mcp__atlassian-da-jira__jira_download_attachments',
+    'mcp__atlassian-da-jira__jira_get_link_types',
+    'mcp__atlassian-da-jira__jira_create_issue_link',
+    'mcp__atlassian-da-jira__jira_remove_issue_link',
+    'mcp__atlassian-da-jira__jira_get_user_profile',
+    'mcp__atlassian-da-jira__jira_get_field_options',
+    'mcp__atlassian-da-jira__jira_get_issue_dates',
+    'mcp__atlassian-da-jira__jira_batch_get_changelogs',
+    'mcp__atlassian-da-jira__jira_add_watcher',
+    'mcp__atlassian-da-jira__jira_remove_watcher',
+]
+
+# Author-only extras: the BA creates and structures work.
+JIRA_BA_EXTRA_TOOLS = [
+    'mcp__atlassian-da-jira__jira_create_issue',
+    'mcp__atlassian-da-jira__jira_batch_create_issues',
+    'mcp__atlassian-da-jira__jira_link_to_epic',
+    'mcp__atlassian-da-jira__jira_create_remote_issue_link',
+    'mcp__atlassian-da-jira__jira_add_issues_to_sprint',
+    'mcp__atlassian-da-jira__jira_get_sprints_from_board',
+    'mcp__atlassian-da-jira__jira_get_agile_boards',
+]
+
+# BA = author: read/write + create (25 tools).
+JIRA_BA_TOOLS = JIRA_RW_TOOLS + JIRA_BA_EXTRA_TOOLS
+
+# Lead = driver: read + transition only, NO create/edit (4 tools).
+JIRA_LEAD_TOOLS = [
+    'mcp__atlassian-da-jira__jira_get_issue',
+    'mcp__atlassian-da-jira__jira_search',
+    'mcp__atlassian-da-jira__jira_get_transitions',
+    'mcp__atlassian-da-jira__jira_transition_issue',
+]
+
 # --- Composite tool sets ---
 
 TOOLS_CODE = TOOLS_EDIT + GITHUB_RW_TOOLS
 TOOLS_CODE_MOBILE = TOOLS_CODE
 TOOLS_DEVOPS = TOOLS_EDIT + GITHUB_RW_TOOLS
 TOOLS_LEAD_FULL = TOOLS_LEAD + GITHUB_RW_TOOLS
+# Design agent: writes a self-contained HTML wireframe and commits the approved one.
+TOOLS_DESIGN = TOOLS_EDIT + GITHUB_RW_TOOLS
 
 # --- Knowledge base resources ---
 
@@ -91,7 +139,10 @@ DEVOPS_KB = [
     "file://steering-docs/code-kb/devops/ENVIRONMENTS.md",
     "file://steering-docs/code-kb/devops/BRANCHING.md",
     "file://steering-docs/code-kb/devops/DEPLOYMENT.md",
+    "file://steering-docs/code-kb/devops/PATTERNS.md",
 ]
+
+CODE_KB = ["file://steering-docs/code-kb/full-stack-fastapi-template/MODULES.md"]
 
 workspace = W(
     name='workspace-workshop',
@@ -102,8 +153,8 @@ workspace = W(
             name='workshop-lead',
             description='Tech lead / architect and single entry point for workspace-workshop. Runs the Initiative→Epic→Story pipeline via the lead-orchestration skill: delegates decomposition to the BA, authors ADRs that gate Stories before implementation opens, and hands implementation to the dev agent. Use when decomposing an Initiative or Epic, gating an ADR, or planning cross-repo work.',
             prompt=W.prompt_ref("lead.md"),
-            tools=TOOLS_LEAD_FULL, allowedTools=TOOLS_LEAD_FULL,
-            resources=[*PROJECT_KB, *DOMAIN_KB],
+            tools=TOOLS_LEAD_FULL + JIRA_LEAD_TOOLS, allowedTools=TOOLS_LEAD_FULL + JIRA_LEAD_TOOLS,
+            resources=[*PROJECT_KB, *DOMAIN_KB, *CODE_KB],
             model='opus',
         ),
         Agent(
@@ -111,12 +162,23 @@ workspace = W(
             description='workshop-full-stack-fastapi-template expert (full-stack-fastapi-template repo, python).',
             prompt=W.prompt_ref('python-expert.md'),
             tools=TOOLS_CODE, allowedTools=TOOLS_CODE,
-            resources=[
-                'file://steering-docs/code-kb/full-stack-fastapi-template/python/KNOW.md',
-                'file://steering-docs/code-kb/full-stack-fastapi-template/PATTERNS.md',
-                *PROJECT_KB,
-                *DOMAIN_KB,
-            ],
+            resources=[*CODE_KB, *PROJECT_KB, *DOMAIN_KB],
+            model='sonnet',
+        ),
+        Agent(
+            name='workshop-ba',
+            description='Business Analyst for workspace-workshop. Turns vague asks into testable, INVEST-shaped Stories grounded in the KB; decomposes Initiatives/Epics, writes acceptance criteria, flags ADR triggers. Authors tracked work (Jira). Use to refine requirements or decompose scope.',
+            prompt=W.prompt_ref('ba-expert.md'),
+            tools=TOOLS_DOC + JIRA_BA_TOOLS, allowedTools=TOOLS_DOC + JIRA_BA_TOOLS,
+            resources=[*PROJECT_KB, *DOMAIN_KB, *CODE_KB],
+            model='sonnet',
+        ),
+        Agent(
+            name='workshop-design',
+            description='Design / wireframe agent for workspace-workshop. Produces a single self-contained clickable HTML mockup grounded in project-kb + the real UI stack (frontend styles, shadcn primitives); prototypes, not production code.',
+            prompt=W.prompt_ref('design-expert.md'),
+            tools=TOOLS_DESIGN, allowedTools=TOOLS_DESIGN,
+            resources=[*PROJECT_KB, *CODE_KB],
             model='sonnet',
         ),
         Agent(
@@ -148,6 +210,8 @@ workspace = W(
     prompts=[
         Prompt(name=W.generated("agent-guide"), description="Auto-generated agent delegation guide"),
         Prompt(name='lead.md', description='Tech lead / orchestrator prompt'),
+        Prompt(name='ba-expert.md', description='Business Analyst: requirements refinement, decomposition, acceptance criteria, tracked-work authoring'),
+        Prompt(name='design-expert.md', description='Design / wireframe expert: clickable HTML mockups grounded in the project UI stack and styles'),
         Prompt(name='python-expert.md', description='python expert prompt'),
         Prompt(name='devops-expert.md', description='DevOps expert: CI/CD pipelines, environments, branching, deployments'),
         Prompt(name='domain-expert.md', description='Domain expert: terminology, supplier integrations, bounded contexts'),

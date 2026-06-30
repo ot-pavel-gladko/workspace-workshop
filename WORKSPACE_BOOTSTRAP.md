@@ -13,15 +13,19 @@ Steps that are marked REQUIRED must be fully completed — do not defer or mark 
 ## Quick Start — Copy & Paste This
 
 ```
-Set up workspace-workshop workspace from scratch. Clone repos: full-stack-fastapi-template. Create venv, pip install -r requirements.txt. Install deps: pandas, pyarrow, jira, pyyaml, gitpython. Ask the user: Kiro or Claude Code? Then run workspace.py generate with the chosen --agent flag, followed by WORKSPACE_SELFTEST.md. Fix any failing tests before proceeding.
+Set up workspace-workshop workspace from scratch. Clone repos: workspace-workshop, full-stack-fastapi-template, site-packages. Create venv, pip install -r requirements.txt. Install deps: pandas, pyarrow, jira, pyyaml, gitpython. Ask the user: Kiro or Claude Code? Then run workspace.py generate with the chosen --agent flag, followed by WORKSPACE_SELFTEST.md. Fix any failing tests before proceeding.
 ```
 
 ---
 
 ## Repositories
 
+- **workspace-workshop**: `https://github.com/ot-pavel-gladko/workspace-workshop.git`
+  This workspace
 - **full-stack-fastapi-template** (required): `https://github.com/ot-pavel-gladko/full-stack-fastapi-template.git`
   full-stack-fastapi-template
+- **site-packages**: `https://github.com/ot-pavel-gladko/workspace-workshop.git` — `pip install -e .`
+  Workspace SDK (Workspace, Agent, KiroWorkspace, ...)
 
 ---
 
@@ -32,35 +36,36 @@ Set up workspace-workshop workspace from scratch. Clone repos: full-stack-fastap
 **Option A — SSH (recommended if you have SSH keys set up):**
 
 ```bash
+git clone git@github.com:ot-pavel-gladko/workspace-workshop.git
 git clone git@github.com:ot-pavel-gladko/full-stack-fastapi-template.git
+git clone git@github.com:ot-pavel-gladko/workspace-workshop.git
 ```
 
 **Option B — HTTPS:**
 
 ```bash
+git clone https://github.com/ot-pavel-gladko/workspace-workshop.git
 git clone https://github.com/ot-pavel-gladko/full-stack-fastapi-template.git
+git clone https://github.com/ot-pavel-gladko/workspace-workshop.git
 ```
 
 ### 2. Create venv: `python3 -m venv .venv` then activate: `source .venv/bin/activate`
-### 3. Install SDKs: (none detected)
+### 3. Install Artisyn dependencies
 
-### 4. Install remaining deps: `pip install pandas pyarrow jira python-dotenv pyyaml gitpython`
-### 5. Document Code (KNOW.md not yet generated)
-
-The following repos need code documentation generated before agents can use them:
-
-- `full-stack-fastapi-template`
+If the workspace has a `requirements.txt`:
 
 ```bash
-artisyn-workspace init --document
+pip install -r requirements.txt
 ```
 
-This generates `steering-docs/code-kb/{repo}/{language}/KNOW.md` per repo.
-After documenting, re-run `workspace.py generate` to update the workspace.
+Otherwise install SDKs manually:
 
----
+```bash
+pip install -e /path/to/site-packages
+```
 
-### 6. Generate Skill Catalog
+### 4. Install remaining deps: `pip install pandas pyarrow jira python-dotenv pyyaml gitpython`
+### 5. Generate Skill Catalog
 
 Generate the skill catalog and code documentation **before** workspace generation.
 `workspace.py generate` must run LAST **on first init** because it produces the authoritative `CLAUDE.md`.
@@ -86,7 +91,7 @@ python3 -c "from artisyn_skill_sdk.hooks.claude_skill_discovery import generate_
 
 ---
 
-### 7. Choose Your Agent
+### 6. Choose Your Agent
 
 **Ask the user:** Which agent platform do you want to use?
 
@@ -97,7 +102,7 @@ python3 -c "from artisyn_skill_sdk.hooks.claude_skill_discovery import generate_
 
 ---
 
-### 8. Generate Workspace
+### 7. Generate Workspace
 
 Run the generate command based on the user's choice above.
 This step must run AFTER skill catalog generation — it produces the authoritative `CLAUDE.md` **on first init** (preserved after that).
@@ -134,7 +139,7 @@ This creates:
 
 ---
 
-### 9. Self-Test (CRITICAL)
+### 8. Self-Test (CRITICAL)
 
 **IMPORTANT: The self-test MUST be executed in a sub-agent with isolated context.**
 

@@ -12,16 +12,18 @@ across every repo in this workspace.
 ## What you read
 
 1. **`steering-docs/code-kb/devops/`** — CICD.md, ENVIRONMENTS.md, BRANCHING.md,
-   DEPLOYMENT.md. Single source of truth for runtime topology and rollout flow.
-2. **Each repo's** `PATTERNS.md` under `steering-docs/code-kb/<repo>/` — repo-specific
-   pipeline / config conventions.
-3. **Infra repo's** `KNOW.md` — Terraform / Pulumi / CloudFormation as appropriate.
-4. **Pipeline state** via MCP (GitLab pipelines, Azure Pipelines, etc.).
+   DEPLOYMENT.md, PATTERNS.md. Single source of truth for runtime topology, rollout
+   flow, and recurring operational patterns/gotchas.
+2. **Each repo's** `MODULES.md` under `steering-docs/code-kb/<repo>/` — the module map;
+   open a module's `KB.md` on demand for repo-specific build/config conventions.
+3. **`steering-docs/project-kb/`** — `TECH_ARCHITECTURE.md` and `INTEGRATIONS.md` for
+   the deployment shape and external systems.
+4. **Pipeline & CI state** via the GitHub MCP (workflow runs, jobs, PR/commit status).
 
 ## Where you act
 
-- Pipeline files: `.gitlab-ci.yml`, `azure-pipelines.yml`, `.github/workflows/`,
-  `Dockerfile`, `*.tfvars`, terragrunt modules, helm charts, kustomize overlays.
+- Pipeline files: `.github/workflows/`, `Dockerfile`, `compose*.yml`, `*.tfvars`,
+  terragrunt modules, helm charts, kustomize overlays.
 - Env-config files when secrets / endpoints need to change.
 - **Never** the application source code — defer to the language-specialist agent and
   delegate via the lead.
@@ -40,7 +42,7 @@ Every change to pipelines or infra:
 
 A rollout note reads like:
 
-> **Change:** add `migrate` job before `deploy:prod` in `.gitlab-ci.yml`.
+> **Change:** add a `migrate` job before the deploy job in `.github/workflows/deploy.yml`.
 > **Environments:** staging, prod.  **Reversible:** yes — `git revert <sha>`, no data change.
 > **Ordering:** migration `0042` merged + applied before this deploys.  **Secrets:** none inlined.
 

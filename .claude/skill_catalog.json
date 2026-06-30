@@ -1,0 +1,1765 @@
+[
+  {
+    "name": "sdlc-pdd",
+    "description": "Complete 13-step Prompt-Driven Design (PDD) lifecycle that transforms rough ideas into implemented, documented solutions. Orchestrates requirements gathering, research, design, implementation planning, code task generation, TDD-based implementation, and validation through structured iterative workflow with human-in-the-loop checkpoints. Supports technical and business dimensions with pluggable dimensional skills. Manages orchestrator-step agent delegation pattern. Supersedes generic-sdlc (steps 1-9), business-sdlc (steps 1-10), and sdlc (wrapper) with unified comprehensive coverage of all 13 steps including implementation task creation, code execution, and post-implementation documentation.\n\nUse when running full software development lifecycle, transforming ideas into designs and code, orchestrating multi-phase project workflows, or managing structured development processes with implementation.\n\nTriggers: \"Start PDD process\", \"SDLC PDD\", \"Run PDD for project\", \"Start development lifecycle\", \"PDD process for\", \"Requirements to implementation\", \"Design and implement\".\n",
+    "category": "sdlc-process",
+    "tags": [
+      "sdlc",
+      "prompt-driven-design",
+      "pdd",
+      "requirements",
+      "design",
+      "implementation",
+      "tdd",
+      "code-generation",
+      "orchestration",
+      "dimensional-skills",
+      "project-lifecycle"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "process-overview.md",
+        "step-11-create-implementation-tasks.md",
+        "orchestrator-prompt.md",
+        "step-08-develop-implementation-plan.md",
+        "step-09-planning-checkpoint.md",
+        "step-10-generate-deliverables.md",
+        "step-04-research-relevant-information.md",
+        "step-12-execute-implementation.md",
+        "dimensional-skills.md",
+        "step-07-design-checkpoint.md",
+        "step-03-requirements-clarification.md",
+        "step-agent-prompt.md",
+        "orchestrator-sop.md",
+        "step-13-validate-and-document.md",
+        "step-02-initial-process-planning.md",
+        "step-06-create-detailed-design.md",
+        "step-05-research-checkpoint.md",
+        "step-01-create-project-structure.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/sdlc-pdd"
+  },
+  {
+    "name": "lead-orchestration",
+    "description": "Codify the lead-agent workflow that sits on top of the Initiative \u2192\nEpic \u2192 Story pipeline. Pick the right entry point for inbound work,\ndelegate decomposition to the BA, author ADRs that gate Stories,\nbrief implementers with five anchors (Story-ID, owning module,\nmodule status, hand-offs, patterns), and run the post-merge code\nreview + cost-loop gates.\nImplementer-neutral: the same checklist applies whether the\nimplementer is agentic or human.\nTriggers: \"what's next\", \"orchestrate this\", \"set up the work for\nstory X\", \"who picks up EPIC-NNNN\", \"dispatch the next story\".\n",
+    "category": "workflow-orchestration",
+    "tags": [
+      "lead",
+      "orchestration",
+      "delegation",
+      "adr",
+      "dispatch",
+      "workflow-orchestration",
+      "business-analysis"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/lead-orchestration"
+  },
+  {
+    "name": "decompose-initiative",
+    "description": "Take an Initiative (a release-sized or quarter-sized strategic\ncontainer) and produce 1..N Epics, each with a business outcome\nstatement, scope (acceptance gates), out-of-scope contract, and\ndependency notes.\nUse when the inbound work is a vague theme or strategic ask. When\nthe inbound work is already a scoped feature (Jira epic, PRD section,\nConfluence feature spec), skip this skill and go directly to\ndecompose-epic.\nTriggers: \"decompose this initiative\", \"break this theme into epics\",\n\"what are the epics for this quarter\", \"this is too vague to estimate\".\n",
+    "category": "requirements-management",
+    "tags": [
+      "decomposition",
+      "initiative",
+      "epic-authoring",
+      "strategic-planning",
+      "business-analysis",
+      "requirements-management"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/decompose-initiative"
+  },
+  {
+    "name": "estimate-story",
+    "description": "Produce a Fibonacci story-point estimate for a single user story by\nscoring it against a fixed 5-dimension rubric (scope, module-touch\nbreadth, schema/contract impact, uncertainty, integration risk) and\ncomparing the sum to a per-workspace anchor set.\nImplementer-neutral by design \u2014 the rubric measures intrinsic\ncomplexity, not \"how long Claude takes\" or \"how many lines of code,\"\nso cost-per-SP is comparable across agentic and human implementations.\nOutputs SP value (or SPLIT when sum >= 23) + per-dimension scores +\nnearest anchor + rationale, written into the Story's Estimation\nsection.\nTriggers: \"estimate this story\", \"score the story\", \"what's the SP\",\n\"re-estimate after scope change\".\n",
+    "category": "requirements-management",
+    "tags": [
+      "estimation",
+      "story-points",
+      "fibonacci",
+      "rubric",
+      "calibration",
+      "business-analysis",
+      "requirements-management"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "scripts": [
+        "evaluate_guidance.py",
+        "propose_change.py",
+        "README.md",
+        "record_estimate.py"
+      ],
+      "references": [
+        "rubric.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/estimate-story"
+  },
+  {
+    "name": "author-bug",
+    "description": "Draft a Bug ticket payload from a defect report \u2014 no spec file backing,\nstraight to the tracker. Produces the Summary, Description (5 sections per\nthe bug template), labels, fix-version, priority, the \"Caused by\" link to the\ntriggering ticket, and a provenance comment. Validates the inbound is actually\na Bug (not an enhancement, not a third-party-only issue, not a draft-PR defect).\nTriggers: \"file a bug for this defect\", \"draft Bug ticket\", \"QA found a defect,\ncapture it\", \"open Bug for this prod incident\", \"log this regression as a Bug\".\n",
+    "category": "requirements-management",
+    "tags": [
+      "bug-authoring",
+      "defect-triage",
+      "tracker",
+      "business-analysis",
+      "requirements-management"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "bug-template.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/author-bug"
+  },
+  {
+    "name": "requirements-extraction",
+    "description": "Extract structured requirements from mixed sources (Excel, Word, PDF, free text, notes, images)\ninto epics and stories. Supports incremental updates when new files are added.\nOutput feeds into business-sdlc or directly into Jira via MCP tools.\nTriggers: \"extract requirements\", \"process requirements file\", \"update requirements from new files\".\n",
+    "category": "requirements-management",
+    "tags": [
+      "requirements",
+      "extraction",
+      "epics",
+      "stories",
+      "jira",
+      "excel",
+      "documents",
+      "incremental",
+      "business-analysis"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "requirements-schema.md",
+        "workflows/2-extract.sop.md",
+        "workflows/1-scan.sop.md",
+        "workflows/3-structure.sop.md",
+        "workflows/4-export.sop.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/requirements-extraction"
+  },
+  {
+    "name": "aila-fastmcp-cloud-deployment",
+    "description": "Deploy ANY FastMCP-based MCP server from local stdio to AWS AgentCore cloud with HTTP transport. \nHandles complete end-to-end deployment workflow including code assessment, transport configuration, \nDocker packaging, agent configuration, consumer setup, deployment execution, and verification.\n\nSupports two deployment patterns: in-repo MCP servers (copy files approach) and external package \nMCP servers (git dependency approach). Automatically configures universal transport settings, \nvalidates package data for skill loading, creates appropriate Docker images, generates agent \nconfigurations, sets up consumer agents with MCP_SERVERS environment variables, and verifies \nsuccessful deployment.\n\nProvides MicroVM lifecycle management understanding, image caching behavior, deployment timing \noptimization, and comprehensive troubleshooting guidance. Handles VPC configuration, security \ngroups, authentication, and CI/CD pipeline integration.\n\nUse when deploying FastMCP servers to cloud, migrating local MCP to HTTP transport, setting up \nmulti-agent MCP access, or troubleshooting MCP deployment issues.\n\nTriggers: \"deploy FastMCP server\", \"deploy MCP server to cloud\", \"FastMCP cloud deployment\", \n\"MCP server HTTP transport\", \"deploy AILA Skills MCP\", \"MCP server deployment workflow\"\n",
+    "category": "agent-deployment",
+    "tags": [
+      "fastmcp",
+      "mcp-server",
+      "cloud-deployment",
+      "aws-agentcore",
+      "http-transport",
+      "docker-packaging",
+      "agent-configuration"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "image-vs-runtime.md",
+        "package-data-validation.md",
+        "lifecycle-configuration.md",
+        "e2e-testing.md",
+        "deployment-marker.md",
+        "deployment-troubleshooting.md",
+        "image-caching.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/aila-fastmcp-cloud-deployment"
+  },
+  {
+    "name": "best-practices",
+    "description": "Provides expertise to create and edit best practice documents for development, automation, and processes.\nGuides creation of standardized best practice documents with examples, rationale, and guidelines.\n\nUse when creating standards documentation or establishing team guidelines.\nTriggers: \"create best practice for\", \"document standard for\", \"write best practice\".\n",
+    "category": "sdlc-process",
+    "tags": [
+      "best-practices",
+      "documentation",
+      "standards",
+      "creation"
+    ],
+    "version": "2.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "artifacts": [
+        "aila-git-workflow/META.yaml",
+        "aila-git-workflow/BEST_PRACTICE.md",
+        "kiro-steering-management/META.yaml",
+        "kiro-steering-management/BEST_PRACTICE.md",
+        "kiss-principle/META.yaml",
+        "kiss-principle/BEST_PRACTICE.md",
+        "bootstrap-first/META.yaml",
+        "bootstrap-first/BEST_PRACTICE.md",
+        "relative-symlinks/META.yaml",
+        "relative-symlinks/BEST_PRACTICE.md",
+        "ai-agent-template-first-configuration/META.yaml",
+        "ai-agent-template-first-configuration/BEST_PRACTICE.md",
+        "code-comments/META.yaml",
+        "code-comments/BEST_PRACTICE.md",
+        "skill-first-problem-solving/META.yaml",
+        "skill-first-problem-solving/BEST_PRACTICE.md",
+        "prompt-management/META.yaml",
+        "prompt-management/BEST_PRACTICE.md",
+        "ai-agent-code-change-process/META.yaml",
+        "ai-agent-code-change-process/BEST_PRACTICE.md",
+        "repository-documentation-structure/META.yaml",
+        "repository-documentation-structure/BEST_PRACTICE.md",
+        "automation-first/META.yaml",
+        "automation-first/BEST_PRACTICE.md",
+        "skills-vs-agents-vs-prompts/META.yaml",
+        "skills-vs-agents-vs-prompts/BEST_PRACTICE.md",
+        "reuse-over-build/META.yaml",
+        "reuse-over-build/BEST_PRACTICE.md",
+        "package-structure/META.yaml",
+        "package-structure/BEST_PRACTICE.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/best-practices"
+  },
+  {
+    "name": "aila-knowledge-extraction",
+    "description": "Extracts, structures, and packages knowledge from any source (web, files, documents) for zero-token agent access. Creates discoverable knowledge artifacts with clean, agent-friendly documentation. Builds reusable knowledge libraries from URLs, PDFs, markdown files, and other content sources. Packages structured information for offline access and distribution across projects. Enables agents to access frequently-used information without token costs through the artifact system.\n\nUse when building knowledge repositories, creating offline documentation, packaging information for agent consumption, or converting unstructured content into structured knowledge bases.\n\nTriggers: \"extract knowledge from\", \"create knowledge package\", \"build knowledge library\", \"package documentation\", \"structure information from\", \"convert to knowledge artifact\"\n",
+    "category": "agent-development",
+    "tags": [
+      "knowledge-extraction",
+      "artifact-creation",
+      "documentation",
+      "zero-token-access",
+      "content-structuring",
+      "knowledge-management"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "knowledge-extraction-sop.md"
+      ],
+      "artifacts": [
+        "kiro-cli-expert-collaboration/META.yaml",
+        "kiro-cli-expert-collaboration/KNOWLEDGE.md",
+        "aila-experts-network-architecture/META.yaml",
+        "aila-experts-network-architecture/KNOWLEDGE.md",
+        "aila-experts-network-development/META.yaml",
+        "aila-experts-network-development/KNOWLEDGE.md",
+        "aila-skill-development-guide/META.yaml",
+        "aila-skill-development-guide/KNOWLEDGE.md",
+        "aila-experts-network-integration/META.yaml",
+        "aila-experts-network-integration/KNOWLEDGE.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/aila-knowledge-extration"
+  },
+  {
+    "name": "post-implementation-review",
+    "description": "Provides expertise to create comprehensive PIR documents from work sessions.\nAnalyzes objectives, actions, issues, and automation opportunities.\nGuides creation of concise, actionable post-implementation reviews.\n\nUse after completing significant work or project phases.\nTriggers: \"create PIR\", \"post-implementation review\", \"document work session\".\n",
+    "category": "sdlc-process",
+    "tags": [
+      "pir",
+      "documentation",
+      "lessons-learned",
+      "automation"
+    ],
+    "version": "3.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "example-article-pir.md",
+        "article-style-guide.md"
+      ],
+      "artifacts": [
+        "2026-02-14-demo-org-admin-skills-migration/META.yaml",
+        "2026-02-14-demo-org-admin-skills-migration/PIR.md",
+        "2026-02-25-dataset-security-remediation/META.yaml",
+        "2026-02-25-dataset-security-remediation/PIR.md",
+        "2026-02-28-mcp-flow-documentation/META.yaml",
+        "2026-02-28-mcp-flow-documentation/PIR.md",
+        "2026-02-23-aila-skills-management-expert-agent/META.yaml",
+        "2026-02-23-aila-skills-management-expert-agent/PIR.md",
+        "2026-02-22-framework-stage-glue-documentation/META.yaml",
+        "2026-02-22-framework-stage-glue-documentation/PIR.md",
+        "2026-02-22-personal-assistant-birth/META.yaml",
+        "2026-02-22-personal-assistant-birth/PIR.md",
+        "2026-02-22-framework-data-pipeline-documentation/META.yaml",
+        "2026-02-22-framework-data-pipeline-documentation/PIR.md",
+        "2026-02-22-skill-discovery-debugging/META.yaml",
+        "2026-02-22-skill-discovery-debugging/PIR.md",
+        "2026-02-14-skills-standardization/META.yaml",
+        "2026-02-14-skills-standardization/PIR.md",
+        "2026-02-22-expert-agents-discovery/META.yaml",
+        "2026-02-22-expert-agents-discovery/PIR.md",
+        "2026-02-24-awsp-88-infrastructure-recovery/META.yaml",
+        "2026-02-24-awsp-88-infrastructure-recovery/PIR.md",
+        "2026-02-16-use-case-library-skill-creation/META.yaml",
+        "2026-02-16-use-case-library-skill-creation/PIR.md",
+        "2026-02-16-skill-migration-052-053/META.yaml",
+        "2026-02-16-skill-migration-052-053/PIR.md",
+        "2026-02-16-office-documents-skill-creation/META.yaml",
+        "2026-02-16-office-documents-skill-creation/PIR.md",
+        "2026-02-27-knowledge-library-integration/META.yaml",
+        "2026-02-27-knowledge-library-integration/PIR.md",
+        "2026-02-15-steering-mcp-implementation/META.yaml",
+        "2026-02-15-steering-mcp-implementation/PIR.md",
+        "2026-02-16-presales-assessment-skill-beta/META.yaml",
+        "2026-02-16-presales-assessment-skill-beta/PIR.md",
+        "2026-02-22-personal-assistant-automation/META.yaml",
+        "2026-02-22-personal-assistant-automation/PIR.md",
+        "2026-02-15-mcp-resource-tools-testing/META.yaml",
+        "2026-02-15-mcp-resource-tools-testing/PIR.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/post-implementation-review"
+  },
+  {
+    "name": "meeting-extraction",
+    "description": "Process meeting recordings (WebVTT auto-transcriptions, manual notes, or chat\nexports) through a three-phase pipeline: (1) trim + translate the raw source\ninto a clean topic-sectioned transcript; (2) summarize into a structured\nmeeting record with decisions and action items; (3) conflate decisions and\nactions into the workspace's canonical pm/ registers. Supports paused or\nchained invocation, multi-language source audio, and review-gate handoff.\nTriggers: \"extract this meeting\", \"summarize the meeting recording\", \"trim and\ntranslate the transcript\", \"ingest the meeting and capture decisions/actions\".\n",
+    "category": "delivery-management",
+    "tags": [
+      "meeting-extraction",
+      "transcript",
+      "decisions",
+      "action-items",
+      "delivery-management"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "team-name-aliases.md",
+        "asr-glossary.md",
+        "design-decisions-log.md",
+        "templates/summary-template.md",
+        "templates/decision-entry-template.md",
+        "templates/trimmed-transcript-template.md",
+        "templates/action-entry-template.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/meeting-extraction"
+  },
+  {
+    "name": "decompose-epic",
+    "description": "Take an Epic's scope (its business outcome statement and acceptance\ngates) and produce a sequenced list of INVEST-shaped user Stories\nwith dependencies, ADR triggers, and pattern citations.\nOutput: draft Story files in specs/STORIES/ plus an updated\nper-Epic register and parent EPIC-NNNN.md.\nInvokes the estimate-story skill per draft; handles SPLIT outcomes\nin the same run.\nTriggers: \"decompose this epic\", \"break the epic into stories\",\n\"re-decompose phase X after scope change\", \"decompose this Jira epic\",\n\"what stories should I write for EPIC-NNNN\".\n",
+    "category": "requirements-management",
+    "tags": [
+      "decomposition",
+      "epic",
+      "story-authoring",
+      "invest",
+      "backlog",
+      "business-analysis",
+      "requirements-management"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/decompose-epic"
+  },
+  {
+    "name": "aila-agent-deployment",
+    "description": "Deploy and manage agent infrastructure on AWS Bedrock AgentCore. Creates Terragrunt stacks for agent deployment with proper configuration, extensions, and dependencies. Verifies agent deployments by checking ECR images, AgentCore runtimes, and version consistency. Monitors deployment status and troubleshoots deployment issues through log analysis. Manages agent lifecycle configurations and deployment methods. Configures Docker builds with git dependencies and private repository access.\n\nUse when deploying agents to AWS, setting up agent infrastructure, verifying deployment success, or troubleshooting deployment failures. \n\nTriggers: \"create agent stack\", \"deploy agent infrastructure\", \"verify agent deployment\", \"check ECR images\", \"agent deployment status\", \"troubleshoot agent deployment\", \"configure agent stack\", \"check agent runtime\"\n",
+    "category": "agent-deployment",
+    "tags": [
+      "aws-bedrock",
+      "agent-deployment",
+      "terragrunt",
+      "ecr-images",
+      "agentcore",
+      "infrastructure-deployment",
+      "deployment-verification",
+      "docker-containers"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "deployment-methods.md",
+        "lifecycle-configuration.md",
+        "terragrunt-stack-guide.md",
+        "dockerfile-git-dependencies.md",
+        "verification-guide.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/aila-agent-deployment"
+  },
+  {
+    "name": "extract-code-kb",
+    "description": "Generates a modular, hierarchical code knowledge base for a repository using LLM-driven analysis instead of tree-sitter. Decomposes the codebase into ~10 black-box modules with per-module KBs (purpose, public interface, dependencies) and a root MODULES.md index. Replaces the flat KNOW.md output of `aila-meta --document` that becomes unusable on large repos. Uses model tiers cost-effectively: Haiku for per-file summaries (massive fan-out), Sonnet for module clustering and module KBs, Opus for the root index synthesis. Recursive: when a module is too big, the same pipeline re-runs inside it and emits a nested modules/ tree.\n\nUse when setting up a workspace for a new repo, refreshing the navigation KB after significant code changes, or replacing an existing tree-sitter KNOW.md with something agents can actually navigate.\n\nTriggers: \"extract code kb\", \"build modules.md\", \"generate code knowledge base\", \"document this repo for agents\", \"refresh modules\", \"replace know.md\"\n",
+    "category": "documentation",
+    "tags": [
+      "code-intelligence",
+      "knowledge-base",
+      "llm-driven",
+      "hierarchical",
+      "module-decomposition",
+      "navigation",
+      "workspace-setup"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "stage3-root-index.md",
+        "stage2-module-kb.md",
+        "stage2-clustering.md",
+        "modules-md-schema.md",
+        "module-kb-schema.md",
+        "stage1-per-file-summary.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/extract-code-kb"
+  },
+  {
+    "name": "author-adr",
+    "description": "Author a single Architecture Decision Record under specs/ADRS/ from a\ntrigger \u2014 typically a Story's \"Triggers ADR: ADR-NNNN\" field surfaced by\ndecompose-epic, but also a direct lead-initiated decision that must be\npinned before implementation can start.\nInstantiates the bundled references/adr-template.md, fills Context / Decision /\nConsequences / Alternatives from the lead's input, resolves linked open\nquestions, updates the spec register, and emits a draft in Proposed\nstatus. Human review flips Status to Accepted; the skill never accepts\non its own.\nTriggers: \"author ADR-NNNN\", \"draft ADR for <decision>\", \"write the ADR\nthat gates STORY-NNNN\", \"supersede ADR-NNNN\", \"pin the decision for <topic>\".\n",
+    "category": "architecture-management",
+    "tags": [
+      "adr",
+      "architecture-decision-record",
+      "lead",
+      "gating-decision",
+      "requirements-management"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "adr-template.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/author-adr"
+  },
+  {
+    "name": "aila-deployment-troubleshooting-aws",
+    "description": "Provides comprehensive AWS deployment troubleshooting and recovery capabilities for AILA Terraform/Terragrunt deployments. Diagnoses deployment failures including resource conflicts, orphaned resources, and state mismatches. Cleans up orphaned CloudFront distributions, S3 buckets, Lambda functions, API Gateway APIs, and AppSync APIs. Resolves Terraform state inconsistencies through import and refresh operations. Handles name conflicts and partial deployments. Recovers from failed Web UI and AI Domain deployments. Provides automated resource identification and cleanup workflows with safety confirmations.\n\nUse when experiencing deployment failures, resource conflicts, or state corruption. Triggers: \"deployment failed\", \"resource already exists\", \"orphaned resources\", \"CloudFront distribution conflict\", \"clean up failed deployment\", \"Terraform state mismatch\", \"deployment troubleshooting\", \"AWS resource cleanup\", \"stack deployment issues\".\n",
+    "category": "agent-deployment",
+    "tags": [
+      "aws-troubleshooting",
+      "terraform-recovery",
+      "deployment-cleanup",
+      "resource-management",
+      "state-management",
+      "cloudfront-cleanup",
+      "infrastructure-recovery"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "artifacts": [
+        "orphaned-resources-cleanup/WORKFLOW.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/aila-deployment-troubleshooting-aws"
+  },
+  {
+    "name": "presales-assessment",
+    "description": "Comprehensive presales lead qualification and meeting preparation system that guides sales teams through systematic lead assessment using BANT framework (Budget, Authority, Need, Timeline). Provides lead qualification scoring, contact research and validation, capability matching, assessment reporting, and first-meeting preparation materials.\n\nKey capabilities: Lead information gathering and clarification, LinkedIn contact research and authority assessment, DataArt capability matching against client needs, BANT framework qualification scoring, comprehensive assessment report generation, first-call deck creation, meeting brief preparation, AILA rules of engagement validation, qualification red flag identification, and scope assessment.\n\nUse when conducting presales activities, qualifying new opportunities, preparing for client meetings, or validating sales leads. Triggers: \"assess this lead\", \"qualify opportunity\", \"prepare first-call deck\", \"BANT qualification\", \"research contact\", \"lead assessment\", \"meeting preparation\", \"presales evaluation\", \"opportunity qualification\", \"client research\".\n",
+    "category": "sdlc-process",
+    "tags": [
+      "presales",
+      "lead-qualification",
+      "bant-framework",
+      "sales-process",
+      "meeting-preparation",
+      "client-research",
+      "opportunity-assessment"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "artifacts": [
+        "aila-rules-of-engagement.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/presales-assessment"
+  },
+  {
+    "name": "aila-agentic-ui-operations",
+    "description": "Automates configuration, deployment, and validation of web UI stacks in AILA agentic repositories. \nConfigures CloudFront distributions, React/Vite frontend applications, Lambda functions for backend APIs, \nand Streamlit applications. Sets up Terragrunt infrastructure configurations with VPC, security groups, \nand API Gateway integration. Validates web UI stack configurations before deployment to catch common issues. \nCreates custom Terraform extensions for additional AWS services like Cognito Identity Pools. Manages \nfrontend environment variables, sidebar navigation configuration, and WebSocket API setup.\n\nUse when configuring web interfaces for agentic applications, setting up CloudFront distributions, \ndeploying React frontends with Lambda backends, or validating UI stack configurations.\n\nTriggers: \"configure web UI\", \"validate web UI stack\", \"explain web UI structure\", \"setup CloudFront\", \n\"deploy frontend application\", \"configure Lambda functions\", \"setup Streamlit apps\", \"create UI extensions\"\n",
+    "category": "web-ui",
+    "tags": [
+      "web-ui",
+      "cloudfront",
+      "terragrunt",
+      "lambda-functions",
+      "streamlit",
+      "react-frontend",
+      "ui-deployment",
+      "api-gateway"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "web-ui-validation-guide.md",
+        "web-ui-extensions-guide.md",
+        "web-ui-configuration-guide.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/aila-agentic-ui-operations"
+  },
+  {
+    "name": "local-docs-project-kb",
+    "description": "DEPRECATED \u2014 renamed/merged into extract-project-kb (use source mode local).\nAlias kept for backward compatibility; removed in a future major version.\n",
+    "category": "project-knowledge",
+    "tags": [
+      "deprecated",
+      "alias",
+      "project-kb",
+      "local-docs"
+    ],
+    "version": "1.1.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/local-docs-project-kb"
+  },
+  {
+    "name": "aila-agent-deployment-configuration",
+    "description": "Configure and deploy Artisyn agents with complete infrastructure setup including JSON configurations, authentication, MCP integration, and deployment validation. Creates agent deployment configurations with Docker templates, runtime settings, IAM permissions, and environment variables. Sets up OAuth and API key authentication for secure agent access. Configures MCP (Model Context Protocol) servers and clients for tool integration. Manages inference profiles for cross-region model routing. Validates deployment configurations and troubleshoots common issues. Integrates with catalog tools for skills, prompts, and knowledge access. Handles Jira/Confluence MCP deployments and custom MCP server creation.\n\nUse when configuring agent deployments, setting up authentication, creating MCP servers, validating configurations, or troubleshooting deployment issues. Triggers: \"configure agent deployment\", \"set up authentication\", \"create MCP server\", \"validate agent config\", \"deploy agent\", \"configure OAuth\", \"set up API keys\", \"inference profile\", \"MCP integration\", \"Jira MCP deployment\".\n",
+    "category": "agent-deployment",
+    "tags": [
+      "agent-deployment",
+      "authentication",
+      "mcp-integration",
+      "configuration-management",
+      "inference-profiles",
+      "oauth-setup",
+      "deployment-validation",
+      "jira-integration",
+      "terragrunt",
+      "aws-deployment"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/aila-agent-deployment-configuration"
+  },
+  {
+    "name": "aila-catalog-sdk",
+    "description": "Artisyn Catalog SDK usage guide for AI agents. Covers skill discovery, resource management, catalog operations, and publishing. Explains all aila_* API functions, RESOURCE_CONFIG types, and provider architecture.\n\nUse when discovering skills, creating or saving skills, managing catalog resources (knowledge, agents, prompts, workshops, PIRs), listing resource types, or publishing workspace artifacts.\n\nTriggers: \"List skills\", \"Create skill\", \"Save resource\", \"Catalog operations\", \"Resource types\", \"SDK usage\", \"Discover providers\", \"List resources\", \"Get resource\".\n",
+    "category": "sdk-operations",
+    "tags": [
+      "sdk",
+      "catalog",
+      "skills",
+      "resources",
+      "discovery",
+      "publishing",
+      "aila",
+      "api"
+    ],
+    "version": "1.1.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/aila-catalog-sdk"
+  },
+  {
+    "name": "template-creation-validation",
+    "description": "Create and validate code templates from real configuration files. Templatizes values with placeholders, auto-detects parameters, and validates template completeness. Use when adding templates to skills, creating reusable configs, or validating existing templates. Triggers include create template, templatize config, validate template, add template to skill.",
+    "category": "automation",
+    "tags": [
+      "templates",
+      "code-generation",
+      "automation",
+      "validation"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Apache-2.0",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/template-creation-validation"
+  },
+  {
+    "name": "workspace-prompts",
+    "description": "Anthropic skill: workspace-prompts",
+    "category": "external",
+    "tags": [
+      "anthropic",
+      "external"
+    ],
+    "version": "1.0.0",
+    "author": "Anthropic",
+    "license": "Apache-2.0",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/workspace-prompts"
+  },
+  {
+    "name": "author-story",
+    "description": "Author a single orphan user Story spec from a refined ask \u2014 a Story that\narrived without a parent Epic and therefore did not flow through\ndecompose-epic. Instantiates the bundled references/story-template.md, fills it from\ninputs, cites patterns, flags ADR triggers, then chains to estimate-story.\nReturns SP + a draft Story file ready to push to the tracker.\nImplementer-neutral: the Story shape is the same regardless of who ships it.\nTriggers: \"author this story\", \"draft a Story for this ask\", \"write a Story\nfor this tracker mention\", \"create the spec for this refined inbound\",\n\"new orphan Story\".\n",
+    "category": "requirements-management",
+    "tags": [
+      "story-authoring",
+      "orphan-story",
+      "invest",
+      "business-analysis",
+      "requirements-management"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "story-template.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/author-story"
+  },
+  {
+    "name": "workspace-management",
+    "description": "Manage Kiro workspaces end-to-end: define workspace in Python, generate local dev structure, convert to Artisyn catalog format, and publish to cloud provider. Covers the full lifecycle from KiroWorkspace definition through catalog generation and AWS publishing.\n\nUse when creating new Kiro workspaces, adding agents to workspaces, generating catalog output, or publishing workspace resources to Artisyn catalog.\n\nTriggers: \"Create workspace\", \"Generate catalog\", \"Publish workspace\", \"Add agent to workspace\", \"Workspace management\".\n",
+    "category": "workspace-management",
+    "tags": [
+      "workspace",
+      "kiro",
+      "catalog",
+      "agents",
+      "publishing",
+      "generation",
+      "aila"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/workspace-management"
+  },
+  {
+    "name": "workspace-agents-refine",
+    "description": "Audits and refines Claude Code agent definitions against Anthropic orchestration best practices and a minimal tool/permission baseline. Produces a diff-style proposal report; never edits agents, workspace.py, settings.json, or rules directly.\n\nWorks on any Claude Code workspace whose agents live in `.claude/agents/*.md` (optionally metadata-driven via AILA `workspace.py`). Grades each agent against a 14-point rubric, classifies tool and permission deviations, and identifies sub-domain splits that clear a 2x token-gain gate.\n\nUse when tuning agent descriptions, adding/removing agents, before publishing a workspace, or periodically after usage telemetry accumulates. Triggers: \"refine agents\", \"audit agent definitions\", \"optimize agent orchestration\", \"refine agent descriptions\".\n",
+    "category": "sdlc-process",
+    "tags": [
+      "agents",
+      "claude-code",
+      "orchestration",
+      "audit",
+      "refinement",
+      "aila-workspace"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "token-gain-heuristic.md",
+        "permissions-baseline.md",
+        "anthropic-orchestration-checklist.md",
+        "bash-guard.md",
+        "tools-baseline.md",
+        "report-template.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/workspace-agents-refine"
+  },
+  {
+    "name": "author-agent",
+    "description": "Restructure an existing Claude Code agent prompt or skill to the workspace\nprompt-anatomy house style \u2014 Act-and-scope, Evidence, outcome-first Report, and\n(where applicable) a Reference output-shape example and the memory-format rule.\nShows a unified diff and applies it only after the author confirms. Edits the\nregeneration SOURCE (prompts/<name>.md), never the generated .claude/agents/<name>.md,\nthen tells the author to run `workspace.py validate` (never a blind generate). For a\npackaged system agent it explains the body cannot be edited in-workspace and points at\nthe platform template. Shapes existing agents/skills only \u2014 it does not author new ones.\nTriggers: \"author-agent <name>\", \"bring <agent> up to the anatomy\", \"restructure this\nskill to the house style\", \"apply prompt anatomy to <agent>\".\n",
+    "category": "sdlc-process",
+    "tags": [
+      "agents",
+      "skills",
+      "claude-code",
+      "prompt-anatomy",
+      "authoring",
+      "aila-workspace"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "skill-anatomy.md",
+        "agent-anatomy.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/author-agent"
+  },
+  {
+    "name": "generic-sdlc",
+    "description": "Guides users through structured software development lifecycle from idea to implementation using Prompt-Driven Design (PDD) process. Systematically progresses from rough idea to detailed design with implementation plan. Creates project structure with organized artifacts, conducts requirements clarification through guided questions, performs technology and library research, develops comprehensive design documentation, and generates implementation plans. Provides iterative checkpoints for research, design, and planning validation. Manages project artifacts including requirements documentation, research findings, detailed designs, and implementation plans. Integrates with PIR documentation and template creation processes.\n\nUse when starting new projects from initial concepts, converting requirements to designs, following structured development processes, or organizing project documentation. \n\nTriggers: \"Start SDLC process for\", \"Design feature\", \"Requirements to design\", \"PDD process\", \"Create project structure\", \"Development lifecycle\", \"Design system\".\n",
+    "category": "sdlc-process",
+    "tags": [
+      "sdlc",
+      "requirements-analysis",
+      "system-design",
+      "project-structure",
+      "implementation-planning",
+      "prompt-driven-design",
+      "documentation",
+      "agentic",
+      "knowledge-discovery",
+      "compliance-audit",
+      "living-methodology"
+    ],
+    "version": "1.1.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml",
+        "SKILL_SPEC.md"
+      ],
+      "references": [
+        "agentic_context_refresh.md",
+        "06_create_detailed_design.md",
+        "08_develop_implementation_plan.md",
+        "04_research_relevant_information.md",
+        "07_design_iteration_checkpoint.md",
+        "05_research_iteration_checkpoint.md",
+        "03_requirements_clarification.md",
+        "agentic_code_knowledge_extraction.md",
+        "agentic_validation_compliance.md",
+        "02_initial_process_planning.md",
+        "agentic_knowledge_sources.md",
+        "01_create_project_structure.md",
+        "agentic_evidence_methodology.md",
+        "09_planning_iteration_checkpoint.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/generic-sdlc"
+  },
+  {
+    "name": "confluence-project-kb",
+    "description": "DEPRECATED \u2014 renamed/merged into extract-project-kb (use source mode\nconfluence). Alias kept for backward compatibility; removed in a future\nmajor version.\n",
+    "category": "project-knowledge",
+    "tags": [
+      "deprecated",
+      "alias",
+      "project-kb",
+      "confluence"
+    ],
+    "version": "1.2.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/confluence-project-kb"
+  },
+  {
+    "name": "gitlab-runner-operations",
+    "description": "Manages GitLab runner infrastructure including installation, configuration, registration, maintenance, and troubleshooting for CI/CD pipelines. Handles runner setup on AWS EC2 instances (ARM64/x86_64), registration with GitLab Cloud or self-hosted using new token-based authentication (GitLab 18.x+), Docker executor configuration with privileged mode, and runner tag management. Provides automatic Docker cleanup and disk space management to prevent build failures from storage exhaustion. Configures ARM64-specific compiler toolchains and multi-platform builds for AWS Graviton instances. Performs comprehensive troubleshooting including disk space issues, connectivity problems, registration failures, and runner health monitoring. Manages security group configuration, SSH access setup, and network connectivity verification.\n\nUse when setting up new GitLab runners, experiencing disk space issues during CI/CD builds, configuring automatic maintenance for runners, troubleshooting runner connectivity or performance issues, managing runner infrastructure on AWS, or registering runners with modern GitLab versions.\n\nTriggers: \"setup gitlab runner\", \"gitlab runner disk space\", \"docker cleanup on runner\", \"runner out of space\", \"configure gitlab runner\", \"gitlab runner maintenance\", \"troubleshoot runner\", \"runner disk full\", \"register gitlab runner\", \"runner registration\", \"gitlab runner installation\", \"runner connectivity issues\"\n",
+    "category": "sdlc-process",
+    "tags": [
+      "gitlab",
+      "ci-cd",
+      "docker",
+      "aws-ec2",
+      "infrastructure-management",
+      "devops-automation",
+      "runner-maintenance",
+      "disk-space-management",
+      "arm64-support"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/gitlab-runner-operations"
+  },
+  {
+    "name": "dplc-aila",
+    "description": "Complete SDLC workflow for AILA data lake data product development from requirements to deployment.\nProvides end-to-end data product development using AILA framework with integrated library management.\nEnables AILA library discovery and function integration into data pipelines.\nGuides Iceberg table configuration and data quality validation setup.\nSupports Terragrunt infrastructure provisioning for AILA data products.\nImplements AILA-specific naming conventions and pipeline structures.\nManages data transformation workflows with reusable library components.\n\nUse when developing AILA data products, building data lake pipelines, implementing AILA transformations, \nsetting up data product infrastructure, managing AILA libraries, configuring Iceberg tables, \nvalidating data quality rules, or following AILA development workflows.\n\nTriggers: \"AILA data product\", \"data lake pipeline\", \"AILA development\", \"data product workflow\", \n\"AILA library management\", \"Iceberg configuration\", \"AILA SDLC\", \"data transformation pipeline\"\n",
+    "category": "data-lake",
+    "tags": [
+      "aila-framework",
+      "data-lake",
+      "sdlc-workflow",
+      "iceberg-tables",
+      "pipeline-development",
+      "library-management",
+      "data-quality",
+      "terragrunt-infrastructure"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "documentation-generator.md",
+        "library-management-workflow.md",
+        "technical-planning.md",
+        "pipeline-structure.md",
+        "iceberg-configuration.md",
+        "business-deliverables.md",
+        "data-quality-best-practices.md",
+        "technical-design.md",
+        "technical-deliverables.md",
+        "naming-conventions.md",
+        "terragrunt-stack-creation.md",
+        "data-quality-rules-reference.md",
+        "add-library-function.md",
+        "pipeline-requirements-analysis.md",
+        "library-reference.md",
+        "terragrunt-structure.md",
+        "business-planning.md",
+        "business-design.md",
+        "git-workflow.md",
+        "pipeline-validation.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/dplc-aila"
+  },
+  {
+    "name": "jira-knowledge-extraction",
+    "description": "Extracts and syncs Jira project data into skill artifact format. Two workflows - knowledge extraction (static snapshot) and tracking extraction (time-series analytics).",
+    "category": "automation",
+    "tags": [
+      "jira",
+      "knowledge",
+      "extraction",
+      "tracking",
+      "analytics"
+    ],
+    "version": "1.1.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "scripts": [
+        "extract-jira-knowledge.py",
+        "extract-jira-tracking.py"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/jira-knowledge-extraction"
+  },
+  {
+    "name": "role-workflow-doc",
+    "description": "Generate UX-friendly per-role workflow documentation for a workspace agent.\nProduces a markdown doc (mission, anchors, daily flow, step-by-step, skills\ncheat-sheet, transitions, gates, recovery) and a paired three-column\nswim-lane SVG (main flow / skills & hooks / inputs & outputs). Optionally\nproduces a storyboard SVG.\nInputs are pulled from the agent's .claude/agents/<agent-name>.md, the\nper-role mapping in the bundled references/role-data-mapping.md, and the\nworkspace's workflow/transition contract if one exists. Outputs go to\npm/roles/<agent-name>-workflow.md and pm/roles/diagrams/.\nTriggers: \"generate role doc for <agent>\", \"create workflow document for the\npm agent\", \"draft the lead role doc\", \"regenerate role workflows\".\n",
+    "category": "workspace-management",
+    "tags": [
+      "documentation",
+      "onboarding",
+      "role",
+      "workflow",
+      "svg",
+      "swimlane"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "svg-swimlane-spec.md",
+        "role-data-mapping.md",
+        "doc-template.md",
+        "color-tokens.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/role-workflow-doc"
+  },
+  {
+    "name": "aila-terraform-modules",
+    "description": "Provides reference documentation and usage guidance for AILA standard Terraform modules.\nDelivers module documentation, configuration examples, and integration patterns for infrastructure components.\nExplains module capabilities including VPC setup, networking configuration, and multi-AZ deployments.\nOffers module selection guidance, version management practices, and Terragrunt integration patterns.\nDocuments module standards, best practices, and troubleshooting approaches for infrastructure deployments.\n\nUse when working with AILA Terraform modules, configuring infrastructure components, or implementing standardized patterns.\nTriggers: \"terraform modules\", \"VPC module\", \"infrastructure modules\", \"module documentation\", \"terragrunt modules\", \"standard modules\".\n",
+    "category": "automation",
+    "tags": [
+      "terraform",
+      "infrastructure",
+      "modules",
+      "vpc",
+      "networking",
+      "terragrunt",
+      "aws",
+      "automation"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "vpc-module.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/aila-terraform-modules"
+  },
+  {
+    "name": "workspace-audit",
+    "description": "Audit how a workspace defines agents, scope, and tasks \u2014 classify each file as\nWHAT-focused (role identity, behavior contracts, acceptance criteria) or\nHOW-focused (file inventories, navigation imperatives, sequential mechanics),\nflag structural gaps, and produce concrete rewrite drafts aligned with the\naidlc_hackathon reference pattern.\n\nHOW-focused task files shrink implementation to mechanical file-touching and\nproduce shallow agent output. WHAT-focused scope files declare contracts and\nleave agents freedom, which produces substantive implementations. This skill\nreviews an existing workspace's agents, scope/design docs, and task/step\nfiles, then reports what to fix and drafts the aidlc-style replacement.\n\nUse when: a workspace's agents or tasks feel too prescriptive; agent output\nis unexpectedly shallow; tasks read like commit logs instead of scope; scope\nfiles lack acceptance criteria; orchestrator delegates without reading\nscope; onboarding aila-SDK workspace to the aidlc pattern.\n\nTriggers: \"audit workspace scope\", \"review my agents and tasks\", \"check\nworkspace against aidlc pattern\", \"classify scope WHAT vs HOW\", \"why are my\nagents producing shallow implementations\", \"audit myproj-feature-area tasks\".\n",
+    "category": "workspace-structure",
+    "tags": [
+      "workspace",
+      "agents",
+      "scope",
+      "specs",
+      "acceptance-criteria",
+      "aidlc",
+      "aila-sdk",
+      "audit",
+      "what-vs-how"
+    ],
+    "version": "0.3.0",
+    "author": "viktor.boldin@dataart.com",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "02-aidlc-templates.md",
+        "03-sample-report.md",
+        "01-classification-heuristics.md",
+        "04-aila-sdk-constraints.md",
+        "templates/changelog.md",
+        "templates/scope-file.md",
+        "templates/orchestrator-scope-protocol.md",
+        "templates/slash-command.md",
+        "templates/overview.md",
+        "templates/acceptance-criteria.md",
+        "templates/agent-prompt.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/workspace-audit"
+  },
+  {
+    "name": "workshop-assistant",
+    "description": "Provides expertise to create and execute hands-on workshops with progress tracking.\nGuides creation of structured workshop materials and execution workflows.\n\nUse when creating workshops, onboarding materials, or training sessions.\nTriggers: \"create workshop\", \"design training\", \"build onboarding\".\n",
+    "category": "automation",
+    "tags": [
+      "workshop",
+      "training",
+      "onboarding",
+      "creation"
+    ],
+    "version": "2.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "artifacts": [
+        "sa-agentic-onboarding/META.yaml",
+        "sa-agentic-onboarding/WORKSHOP.md",
+        "skills-framework-onboarding/META.yaml",
+        "skills-framework-onboarding/WORKSHOP.md",
+        "skills-framework-onboarding/README.md",
+        "kiro-onboarding/META.yaml",
+        "kiro-onboarding/WORKSHOP.md",
+        "aila-sdk-onboarding/META.yaml",
+        "aila-sdk-onboarding/WORKSHOP.md",
+        "aila-sdk-onboarding/README.md",
+        "best-practices-management/META.yaml",
+        "best-practices-management/WORKSHOP.md",
+        "workshop-creation/META.yaml",
+        "workshop-creation/WORKSHOP.md",
+        "skills-framework-onboarding/materials/anthropic-standard.md",
+        "skills-framework-onboarding/materials/README.md",
+        "skills-framework-onboarding/materials/context-engineering.md",
+        "skills-framework-onboarding/materials/collective-steering.md",
+        "kiro-onboarding/materials/microlab-03-discovery.md",
+        "kiro-onboarding/materials/microlab-01-first-steering.md",
+        "kiro-onboarding/materials/microlab-05-bootstrap.md",
+        "kiro-onboarding/materials/microlab-06-sdlc-mini.md",
+        "kiro-onboarding/materials/microlab-07-create-pir.md",
+        "kiro-onboarding/materials/microlab-02-using-skills.md",
+        "kiro-onboarding/materials/README.md",
+        "kiro-onboarding/materials/microlab-04-prompt-management.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/workshop-assistant"
+  },
+  {
+    "name": "business-sdlc",
+    "description": "Business SDLC orchestrator that manages the complete 10-step Prompt-Driven Design (PDD) process with business dimension focus. Transforms rough project ideas into detailed designs with implementation plans through systematic workflow management. Executes sequential SDLC phases including setup, requirements gathering, research, design, and deliverable generation. Automatically loads business-specific skills for requirements clarification, detailed design, implementation planning, and document generation. Manages workflow transitions, checkpoints, and iteration control throughout the project lifecycle. Provides structured project artifact creation with business stakeholder focus and ROI considerations.\n\nUse when managing business projects through structured development lifecycle, orchestrating multi-phase project workflows, or transforming business ideas into implementation-ready plans. Triggers: \"Run business SDLC for project\", \"Execute step [number] for project\", \"Go to design checkpoint\", \"Iterate requirements phase\".\n",
+    "category": "sdlc-process",
+    "tags": [
+      "business-sdlc",
+      "workflow-orchestration",
+      "project-management",
+      "pdd-process",
+      "business-requirements",
+      "implementation-planning",
+      "checkpoint-management",
+      "deliverable-generation"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "process-overview.md",
+        "step-07-design-iteration-checkpoint.md",
+        "step-09-planning-iteration-checkpoint.md",
+        "step-08-develop-implementation-plan.md",
+        "step-05-research-iteration-checkpoint.md",
+        "step-04-research-relevant-information.md",
+        "step-03-requirements-clarification.md",
+        "step-10-generate-deliverable-documents.md",
+        "step-02-initial-process-planning.md",
+        "step-06-create-detailed-design.md",
+        "step-01-create-project-structure.md",
+        "business-skills/requirements-clarification-business.md",
+        "business-skills/develop-implementation-plan-business.md",
+        "business-skills/create-detailed-design-business.md",
+        "business-skills/generate-deliverable-documents-business.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/business-sdlc"
+  },
+  {
+    "name": "review-domain-kb",
+    "description": "Audit steering-docs/domain-kb/ before commits or engagement handoffs so the\nDataArt-owned domain knowledge stays vendor-general: no client names/branding,\nno client-specific business rules or requirements, no client confidential\ninformation, no credentials/secrets, no PII. Builds a client-term lexicon from\nthe Client-IP project-kb, scans every domain-kb file, then classifies each\nfinding as MOVE, REDACT, or GENERALIZE.\nTriggers: \"review domain kb\", \"audit domain-kb before commit\", \"check domain-kb\nfor client info / PII\", \"is domain-kb vendor-general\", \"gate the domain-kb\nhandoff\".\n",
+    "category": "governance",
+    "tags": [
+      "domain-kb",
+      "governance",
+      "ip-boundary",
+      "pii",
+      "review",
+      "steering-docs"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/review-domain-kb"
+  },
+  {
+    "name": "extract-project-kb",
+    "description": "Build a structured project knowledge base in steering-docs/project-kb/ from\none of two sources: (A) local documents (PDF, DOCX, PPTX, MD, TXT, XLSX) or\n(B) a Confluence space / page tree. Same three-phase pipeline \u2014 discover,\nextract, structure \u2014 and the same output regardless of source, so downstream\nagents work identically. Produces DOMAINS, FEATURES, INTEGRATIONS, GLOSSARY,\nPROJECT_GOALS, and TECH_ARCHITECTURE.\nTriggers: \"build project KB\", \"extract project knowledge from these documents\",\n\"build project KB from Confluence\", \"create the project KB from raw-docs\".\n",
+    "category": "project-knowledge",
+    "tags": [
+      "project-kb",
+      "knowledge-base",
+      "extraction",
+      "local-docs",
+      "confluence",
+      "steering-docs"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "kb-schema.md",
+        "classification.md",
+        "workflows/2-extract.sop.md",
+        "workflows/3-structure.sop.md",
+        "workflows/1-discover.sop.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/extract-project-kb"
+  },
+  {
+    "name": "knowledge-mining",
+    "description": "Extracts structured knowledge and actionable information from unstructured sources including documents, code, and conversations. Identifies known issues, automation opportunities, actionable tasks, participants and roles, TODO items, and open questions from various sources. Applies specialized mining strategies with confidence scoring to filter meaningful knowledge from noise. Scans directories, files, or conversation history to extract categorized information. Supports multi-strategy extraction and custom filtering by confidence level or category.\n\nUse when you need to extract structured information from unstructured content, analyze documentation for issues and opportunities, process meeting notes for action items, or onboard to new projects by mining existing knowledge.\n\nTriggers: \"extract known issues\", \"find automation opportunities\", \"extract tasks from\", \"mine knowledge\", \"scan for\", \"extract actionable items\"\n",
+    "category": "project-knowledge",
+    "tags": [
+      "knowledge-extraction",
+      "document-mining",
+      "information-retrieval",
+      "structured-analysis",
+      "content-scanning",
+      "data-extraction"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "extraction-principles.md"
+      ],
+      "artifacts": [
+        "open-questions/STRATEGY.md",
+        "known-issues/STRATEGY.md",
+        "automation-opportunities/STRATEGY.md",
+        "participants/STRATEGY.md",
+        "tasks/STRATEGY.md",
+        "todos/STRATEGY.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/knowledge-mining"
+  },
+  {
+    "name": "lambda-container-deployment",
+    "description": "Configure and deploy Python Lambda functions using container images instead of zip packages. Use when dependencies exceed Lambda layer limits (70MB) or require complex native compilation (pandas, numpy, scipy).\n\nCovers Dockerfile creation, Terraform/Terragrunt configuration, ECR integration, shared library handling, local testing, and deployment verification.\n\nTriggers: \"Lambda container deployment\", \"Lambda Docker image\", \"ECR Lambda setup\", \"Lambda zip too large\", \"Lambda pandas deployment\", \"container image Lambda Terraform\"\n",
+    "category": "platform",
+    "tags": [
+      "aws",
+      "lambda",
+      "docker",
+      "ecr",
+      "terraform",
+      "terragrunt",
+      "python",
+      "container"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/lambda-container-deployment"
+  },
+  {
+    "name": "aila-ai-domain-operations",
+    "description": "Automates configuration and deployment of AILA AI Domain infrastructure on AWS including VPC networking setup, Streamlit web UI deployment, Cognito authentication integration, and custom domain configuration with HTTPS. Provides operational workflows for creating Terragrunt configurations, deploying AI Domain stacks, setting up custom domains with Route53, managing ACM certificates, and handling cross-account hosted zone scenarios. Supports multiple deployment scenarios from minimal development setups to full production environments with VPC isolation and web interfaces.\n\nUse when deploying AI infrastructure, setting up Streamlit applications, configuring custom domains, or managing AILA domain deployments. Triggers: \"Configure AI domain infrastructure\", \"Set up custom domain for Streamlit\", \"Deploy AI domain stack\", \"Configure VPC networking\", \"Enable Cognito authentication\", \"Set up HTTPS domain\".\n",
+    "category": "ai-domain",
+    "tags": [
+      "ai-domain",
+      "aws-infrastructure",
+      "streamlit",
+      "cognito-auth",
+      "custom-domains",
+      "vpc-networking",
+      "terragrunt",
+      "https-setup"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "ai-domain-configuration-guide.md",
+        "custom-domain-setup-guide.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/aila-ai-domain-operations"
+  },
+  {
+    "name": "skill-management-aila",
+    "description": "Guide for discovering, searching, and managing Artisyn skills using catalog tools. \nLists all available skills, searches by category/tags, views complete skill definitions,\naccesses skill resources (scripts/references/assets), creates new skills with auto-generated metadata,\nmigrates existing skills to AILA format, validates skills against standards, and manages skill libraries.\n\nUse when managing AILA skill catalog, discovering available capabilities, creating new skills,\nor migrating legacy skills. Handles both project-specific and shared library skills.\n\nTriggers: \"list skills\", \"find skills\", \"create skill\", \"skill management\", \"validate skill\", \n\"migrate skill\", \"skill catalog\", \"what skills available\".\n",
+    "category": "agent-development",
+    "tags": [
+      "skill-catalog",
+      "skill-discovery",
+      "skill-creation",
+      "skill-validation",
+      "skill-migration",
+      "catalog-tools",
+      "aila-skills"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "anthropic-skills-guide.md",
+        "validation-rules.md",
+        "testing-guide.md",
+        "migration-guide.md",
+        "metadata-schema.md",
+        "structure-guide.md",
+        "acceptance-criteria-guide.md"
+      ],
+      "artifacts": [
+        "anthropic-skills-spec/specification.md",
+        "anthropic-skills-spec/what-are-skills.md",
+        "anthropic-skills-spec/integrate-skills.md",
+        "anthropic-skills-spec/skills-ref-sdk.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/skill-management-aila"
+  },
+  {
+    "name": "hello-world",
+    "description": "Basic validation and testing skill that provides simple greeting functionality and skill loading confirmation.\nDisplays welcome messages and verifies skill is properly loaded in the system.\nUse when testing skill functionality, validating system setup, or demonstrating basic skill execution.\nTriggers: \"hello world\", \"test skill\", \"validate system\", \"show greeting\", \"skill test\".\n",
+    "category": "automation",
+    "tags": [
+      "testing",
+      "validation",
+      "greeting",
+      "basic-functionality",
+      "system-check"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/hello-world"
+  },
+  {
+    "name": "extract-domain-kb",
+    "description": "Extract project-agnostic domain knowledge into a workspace's\nsteering-docs/domain-kb/ directory. Two source modes: (A) a local shared\nknowledge base on disk \u2014 filter for project-relevant content and adapt; or\n(B) external vendor developer portals \u2014 discover a machine-readable spec,\nscrape verbatim, then distil. Writes GLOSSARY.md, VENDORS.md, PATTERNS.md,\nand one prose file per vendor.\nTriggers: \"extract domain kb\", \"enrich domain-kb from <source>\", \"pull domain\nknowledge\", \"scrape <vendor> docs into domain-kb\".\n",
+    "category": "documentation",
+    "tags": [
+      "domain-kb",
+      "knowledge-extraction",
+      "vendor-docs",
+      "openapi",
+      "steering-docs"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/extract-domain-kb"
+  },
+  {
+    "name": "release-notes-creation",
+    "description": "Create release notes from PIRs for technical teams and business stakeholders. Generates two documents - technical for SAs/engineers and business for sales/BusDev. Triggers - create release notes, generate release notes, release letter.",
+    "category": "sdlc-process",
+    "tags": [
+      "release-notes",
+      "pir",
+      "documentation",
+      "communication"
+    ],
+    "version": "1.0.0",
+    "author": null,
+    "license": "Apache-2.0",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/release-notes-creation"
+  },
+  {
+    "name": "agentic-repo-operations",
+    "description": "Automates creation, validation, and configuration of AILA agentic repositories following standard architecture patterns. Creates new agentic repositories with proper folder structure, Terragrunt hierarchy, and CI/CD configuration. Validates existing repository structure against AILA standards including library organization, config folders, and Terragrunt setup. Generates GitLab CI/CD pipeline configurations with proper stack categorization and build requirements. Explains repository architecture patterns and troubleshoots structural issues. Supports AWS Bedrock AgentCore deployments with agents, knowledge bases, and web UIs.\n\nUse when setting up new agentic projects, validating repository compliance, or configuring deployment pipelines. Triggers: \"create agentic repository\", \"validate repo structure\", \"generate CI/CD configuration\", \"agentic repo operations\", \"repository architecture\", \"terragrunt hierarchy validation\".\n",
+    "category": "automation",
+    "tags": [
+      "agentic-repositories",
+      "repository-automation",
+      "terragrunt-hierarchy",
+      "cicd-configuration",
+      "aws-bedrock",
+      "repository-validation"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "terragrunt-hierarchy-pattern.md",
+        "repo-structure-pattern.md",
+        "cicd-configuration-pattern.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/agentic-repo-operations"
+  },
+  {
+    "name": "jira-git-tracking-extraction",
+    "description": "Anthropic skill: jira-git-tracking-extraction",
+    "category": "external",
+    "tags": [
+      "anthropic",
+      "external"
+    ],
+    "version": "1.0.0",
+    "author": "Anthropic",
+    "license": "Apache-2.0",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/jira-git-tracking-extraction"
+  },
+  {
+    "name": "use-case-library",
+    "description": "Manages DataArt use cases, case studies, and battle cards for sales and consulting teams.\nCreates use cases from documents or verbal descriptions with guided extraction workflows.\nGenerates case studies with client stories, challenges, solutions, and quantified results.\nProduces battle cards for sales enablement with competitive positioning and objection handling.\nSearches and filters library by industry, cloud platform, challenge type, or keywords.\nMaintains structured artifact storage with metadata for easy discovery and organization.\nConverts content between formats using office-documents integration for presentations.\nTracks completeness and guides users through information gathering for comprehensive documentation.\n\nUse when creating sales materials, documenting client success stories, or building competitive assets.\nTriggers: \"create use case\", \"find case studies\", \"search use cases\", \"battle card\", \"case study for client\"\n",
+    "category": "project-knowledge",
+    "tags": [
+      "sales-enablement",
+      "case-studies",
+      "use-cases",
+      "battle-cards",
+      "client-stories",
+      "competitive-intelligence"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "case-study-template.md",
+        "battle-card-template.md",
+        "use-case-template.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/use-case-library"
+  },
+  {
+    "name": "ecr-docker-terragrunt-troubleshooting",
+    "description": "Troubleshoot Docker images not being built or pushed to ECR by Terragrunt deployments. Covers null_resource triggers, image digest mismatches, pipeline caching, and Lambda image staleness.\n\nUse when Lambda not using new code after deployment or ECR image seems stale.\n\nTriggers: \"ECR image not updating\", \"Docker build not triggered\", \"Lambda old image\", \"Terragrunt Docker troubleshooting\", \"null_resource not rebuilding\", \"image digest mismatch\", \"pipeline cache stale image\"\n",
+    "category": "platform",
+    "tags": [
+      "aws",
+      "ecr",
+      "docker",
+      "terragrunt",
+      "terraform",
+      "lambda",
+      "troubleshooting",
+      "pipeline"
+    ],
+    "version": "1.1.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/ecr-docker-terragrunt-troubleshooting"
+  },
+  {
+    "name": "agentic-glrc",
+    "description": "Game Logic Reconstruction Life Cycle (GLRC) for betting and gaming compliance labs. Transforms game specifications, paytables, help screens, and test harness logs into validated, compliance-ready reconstructions of game math logic through a structured 13-step process with component-based composition and billion-round simulation.\nUse when reconstructing game math models, validating RTP/odds/hit-frequency, designing component compositions for slot games, or producing compliance reports.\nTriggers: \"reconstruct game logic\", \"GLRC process\", \"game math validation\", \"RTP simulation\", \"compliance verification\", \"component composition\", \"game reconstruction\", \"paytable validation\".",
+    "category": "sdlc-process",
+    "tags": [
+      "glrc",
+      "game-logic",
+      "compliance",
+      "rtp-validation",
+      "simulation",
+      "component-composition",
+      "betting-gaming"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Apache-2.0",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "11_execute_composition.md",
+        "skill_13_generate_deliverables.md",
+        "05_research_component_catalog.md",
+        "03_requirements_clarification.md",
+        "skill_07_create_composition_design.md",
+        "10_planning_iteration_checkpoint.md",
+        "09_develop_composition_plan.md",
+        "06_component_selection_checkpoint.md",
+        "07_create_composition_design.md",
+        "skill_09_develop_composition_plan.md",
+        "08_design_iteration_checkpoint.md",
+        "02_initial_process_planning.md",
+        "skill_03_requirements_clarification.md",
+        "13_generate_deliverables.md",
+        "01_create_project_structure.md",
+        "04_analyze_visual_references.md",
+        "12_validate_against_specifications.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/agentic-glrc"
+  },
+  {
+    "name": "steering-assessment",
+    "description": "Enhance project static knowledge by discovering and configuring relevant skills and resources in .kiro/steering/. \nDiscovers skills/resources matching user needs and configures Kiro steering for specific domains like AWS, documentation, testing, or infrastructure.\nMakes skills/resources available \"by heart\" without full discovery and enhances static knowledge for offline use.\nConfigures steering with metadata-only or full content modes based on usage frequency.\nValidates steering configuration and checks for updates to synced items.\nUse when needing specific skills/resources in project steering, enhancing domain knowledge, or making capabilities available offline.\nTriggers: \"Add AWS skills to steering\", \"Configure steering for documentation\", \"I need testing resources in steering\", \"Make infrastructure skills available locally\", \"I need to improve steering\", \"Enhance my project steering\".\n",
+    "category": "project-knowledge",
+    "tags": [
+      "steering",
+      "configuration",
+      "project-knowledge",
+      "skill-discovery",
+      "offline-access",
+      "metadata-management"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "references": [
+        "steering-best-practices.md"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/steering-assessment"
+  },
+  {
+    "name": "create-repo-expert",
+    "description": "Creates read-only expert agents for repositories with access to code documentation and metadata.\nGenerates agent configurations with knowledge of repository structure, code patterns, and documentation.\nManages agent deployment to local or global locations with appropriate path configurations.\nLocates existing agents across local and global configurations showing precedence rules.\nRemoves expert agents from local/global locations with cleanup options for generated configs.\nValidates repository documentation structure and warns about missing metadata requirements.\nProvides expertise on repository code through AST-parsed documentation and structured knowledge access.\n\nUse when you need to create code experts, generate repository agents, deploy expert configurations, \nmanage agent locations, or remove repository experts. \n\nTriggers: \"create repository expert\", \"create repo expert\", \"generate expert agent\", \n\"where is agent\", \"remove expert agent\", \"deploy agent\", \"expert without knowledge\".\n",
+    "category": "agent-development",
+    "tags": [
+      "expert-agents",
+      "repository-knowledge",
+      "agent-configuration",
+      "code-documentation",
+      "agent-deployment"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ],
+      "scripts": [
+        "generate_agent_configs.py"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/create-repo-expert"
+  },
+  {
+    "name": "repo-documentation",
+    "description": "Automates comprehensive code documentation generation with AST-parsed metadata for AI agent understanding.\nGenerates complete package documentation with function signatures, class structures, docstrings, and dependencies.\nCreates redistributable documentation artifacts and establishes documentation standards for code generation.\nExtracts metadata from Python packages using AST parsing for hierarchical documentation structure.\nEnables AI agents to understand codebases through embedded metadata and steering documentation.\n\nUse when generating repository documentation, creating code metadata for AI agents, establishing documentation standards, or preparing redistributable documentation artifacts.\n\nTriggers: \"Generate documentation for this repository\", \"document this codebase\", \"create repo documentation\", \"generate code metadata\", \"extract package documentation\"\n",
+    "category": "sdlc-process",
+    "tags": [
+      "documentation",
+      "code-analysis",
+      "ast-parsing",
+      "metadata-extraction",
+      "ai-agent-integration",
+      "package-documentation",
+      "code-understanding"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/repo-documentation"
+  },
+  {
+    "name": "aila-agent-development-part1",
+    "description": "Creates AI agents for AWS Bedrock AgentCore with complete end-to-end development workflow.\nGenerates agent libraries with proper structure, dependencies, and Python modules.\nCreates custom tools with @tool decorators and proper error handling for agent use.\nValidates agent configurations before deployment to catch common issues.\nBootstraps new libraries with best practices and dual requirements patterns.\nHandles declarative agent creation using JSON configuration files.\nIntegrates external SDK references and validates library structure compliance.\n\nUse when creating new agents, building agent libraries, developing custom tools, or validating agent configurations.\nTriggers: \"Create new agent\", \"Create agent library\", \"Create tool for\", \"validate agent\", \"bootstrap library\", \"agent development\", \"custom tool creation\".\n",
+    "category": "agent-development",
+    "tags": [
+      "ai-agents",
+      "aws-bedrock",
+      "agentcore",
+      "python-development",
+      "tool-creation",
+      "library-structure",
+      "agent-validation"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/aila-agent-development-part1"
+  },
+  {
+    "name": "aila-agent-development-part2",
+    "description": "Advanced AILA agent development capabilities for SDK migration, requirements management, and local testing workflows. \nMigrates reusable code from project libraries to external SDKs with proper dependency management. \nValidates library structures and resolves import conflicts during migration processes.\nManages Python dependencies using dual requirements patterns for cloud deployment and local development.\nSets up local development environments with virtual environments and dependency installation.\nGenerates comprehensive test files for local agent testing with automatic environment variable discovery.\nProvides library structure validation and dependency conflict resolution.\n\nUse when migrating libraries to external SDKs, setting up local testing environments, managing agent dependencies, or validating agent structures locally.\nTriggers: \"migrate library to external SDK\", \"test agent locally\", \"manage requirements\", \"validate library structure\", \"install dependencies locally\", \"create test file for agent\", \"set up dual requirements\"\n",
+    "category": "agent-development",
+    "tags": [
+      "sdk-migration",
+      "requirements-management",
+      "local-testing",
+      "agent-validation",
+      "dependency-management",
+      "library-migration",
+      "development-environment"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Proprietary - DataArt Core IP. Cannot copy, modify, or use without DataArt permission.",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/aila-agent-development-part2"
+  },
+  {
+    "name": "workshop-executor",
+    "description": "Facilitates AILA workshops by guiding users through hands-on exercises without doing the work for them.\nPrompts users to open workshop files, complete exercises, and verify understanding at checkpoints.\nProvides hints and clarification when users are stuck, but encourages learning by doing.\n\nUse when user asks to execute or start workshops.\nTriggers: \"execute workshop\", \"start workshop\", \"run workshop\", \"do the workshop\", \"walk me through workshop\".\n",
+    "category": "automation",
+    "tags": [
+      "workshops",
+      "training",
+      "onboarding",
+      "facilitation",
+      "education"
+    ],
+    "version": "1.0.0",
+    "author": "dataart-aila",
+    "license": "Apache-2.0",
+    "source_provider": "artisyn-skill-library",
+    "resources": {
+      "root": [
+        "SKILL.md",
+        "SKILL_META.yaml"
+      ]
+    },
+    "_file_path": "/home/pgladko/projects/workshop/workspace-workshop/.venv/lib/python3.12/site-packages/artisyn_skill_library/skills/workshop-executor"
+  }
+]

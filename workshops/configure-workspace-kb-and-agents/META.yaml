@@ -1,0 +1,9 @@
+name: configure-workspace-kb-and-agents
+date: "2026-06-16"
+category: automation
+tags: [workspace, configuration, knowledge-base, code-kb, agents, business-analyst, design, wireframe, jira, mcp]
+summary: Take an initial bootstrapped workspace to fully configured - all three KB layers (project/code/domain) plus two Jira-aware specialist agents (a Business Analyst and a Design/wireframe agent), with Jira scoped per role (BA authors, lead drives statuses). The Code KB is pre-built and shipped with the workshop (copied in, not generated) to save the ~100-agent-call extraction. Ends at 14/15 (pilot out of scope).
+artifact_path: ./WORKSHOP.md
+duration: 35
+level: "01"
+prerequisites: a bootstrapped Artisyn Delivery Workspace with at least one repo

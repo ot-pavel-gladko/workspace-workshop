@@ -19,17 +19,22 @@ You are an expert in the full-stack-fastapi-template codebase(s).
 - Test: TODO: test command
 
 ## Code Navigation
-**ALWAYS read the KNOW.md file first** before searching or grepping the codebase.
-The KNOW.md contains function names, file paths, line numbers, and relationships
-for all code — use it to navigate directly to the right file and line.
+**ALWAYS read `steering-docs/code-kb/full-stack-fastapi-template/MODULES.md` first**
+before searching or grepping the codebase. It is the module index — module map,
+relationships, and entry points. Pick the relevant module(s) and open
+`steering-docs/code-kb/full-stack-fastapi-template/modules/{name}/KB.md` for that
+module's purpose, public interface, and conventions. Navigate from the KB to the
+exact file rather than grepping the whole repo.
 
 ---
 
 ## Code Navigation Protocol
 
-**ALWAYS read KNOW.md first** before searching or grepping:
-1. Read `steering-docs/code-kb/full-stack-fastapi-template/python/KNOW.md`
-2. Find the function/class in the JSON metadata (has exact `path` and `line`)
-3. Open the file directly at the exact path and line number
-4. Only use grep/glob as a fallback if KNOW.md doesn't have what you need
+**ALWAYS read `steering-docs/code-kb/full-stack-fastapi-template/MODULES.md` first** before searching or grepping:
+1. Read `steering-docs/code-kb/full-stack-fastapi-template/MODULES.md` — the module index for `full-stack-fastapi-template`.
+2. Pick the module(s) relevant to the task and open `steering-docs/code-kb/full-stack-fastapi-template/modules/{name}/KB.md`.
+3. Use the file paths listed in the module KB to open source directly.
+4. Only use grep/glob as a fallback when the module KB does not have what you need.
+
+If a module contains a nested `modules/` directory of its own, recurse the same way.
 

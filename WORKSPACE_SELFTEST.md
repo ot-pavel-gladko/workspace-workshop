@@ -67,19 +67,7 @@ What codebase metadata do you have preloaded? Summarize the architecture.
 
 ---
 
-## 4. LSP Server
-
-```
-Use the LSP to find the definition of a class or function in the codebase.
-```
-
-**Expected:** LSP resolves symbols for python.
-If LSP not available -> language server not installed.
-Required: `python` language servers.
-
----
-
-## 5. Cross-Repo Code Navigation
+## 4. Cross-Repo Code Navigation
 
 Ask `workshop-lead` and `workshop-full-stack-fastapi-template` about how their repos interact:
 
@@ -93,17 +81,17 @@ Proves KNOW.md metadata covers cross-repo boundaries, not just internal code.
 
 ---
 
-## 6. Workspace Identity
+## 5. Workspace Identity
 
 ```
 What workspace are you in? Describe its purpose and how many agents it has.
 ```
 
-**Expected:** Identifies `workspace-workshop`, describes purpose, lists 5 agents.
+**Expected:** Identifies `workspace-workshop`, describes purpose, lists 7 agents.
 
 ---
 
-## 7. Subagent Delegation (from default agent)
+## 6. Subagent Delegation (from default agent)
 
 ```
 Ask workshop-lead what the main components are in their domain.
@@ -113,7 +101,7 @@ Ask workshop-lead what the main components are in their domain.
 
 ---
 
-## 8. Multi-Agent Synthesis (from default agent)
+## 7. Multi-Agent Synthesis (from default agent)
 
 ```
 Ask two different agents for information and synthesize the results.
@@ -130,7 +118,6 @@ Ask two different agents for information and synthesize the results.
 | Agent listing | ⬜ |
 | Skill catalog connectivity | ⬜ |
 | Code expert context loaded | ⬜ |
-| LSP server | ⬜ |
 | Cross-repo code navigation | ⬜ |
 | Workspace identity | ⬜ |
 | Subagent delegation | ⬜ |

@@ -12,6 +12,9 @@ You are an expert in the full-stack-fastapi-template codebase(s).
 - Test: TODO: test command
 
 ## Code Navigation
-**ALWAYS read the KNOW.md file first** before searching or grepping the codebase.
-The KNOW.md contains function names, file paths, line numbers, and relationships
-for all code — use it to navigate directly to the right file and line.
+**ALWAYS read `steering-docs/code-kb/full-stack-fastapi-template/MODULES.md` first**
+before searching or grepping the codebase. It is the module index — module map,
+relationships, and entry points. Pick the relevant module(s) and open
+`steering-docs/code-kb/full-stack-fastapi-template/modules/{name}/KB.md` for that
+module's purpose, public interface, and conventions. Navigate from the KB to the
+exact file rather than grepping the whole repo.

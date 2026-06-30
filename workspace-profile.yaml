@@ -17,8 +17,8 @@ repos:
   model: sonnet
 mcp:
   atlassian:
-    enabled: false
-    jira_enabled: false
+    enabled: true
+    jira_enabled: true
     confluence_enabled: false
     jira_url: https://support.dataart.com
     confluence_url: https://conf.dataart.com
@@ -42,9 +42,9 @@ mcp:
     enabled: false
     url: http://127.0.0.1:3845/mcp
 agents:
-  include_ba: false
+  include_ba: true
   include_devops: true
-  include_design: false
+  include_design: true
   include_domain: true
   include_pm: false
   lead_model: opus

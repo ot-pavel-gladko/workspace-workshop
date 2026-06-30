@@ -2,9 +2,93 @@
 
 workspace-workshop workspace
 
+# Steering Docs — Knowledge Base Index
+
+The single entry point to this workspace's knowledge base. The KB is split into
+**three layers** by ownership and purpose. Use this index to decide **which layer
+to consult** for a question — and **where new knowledge belongs** when you learn
+something.
+
 ---
 
-## Agents (5)
+## The three layers
+
+### 1. `project-kb/` — project-specific (client IP)
+
+*What this product is, what it does, and how it's built.* Business and architecture
+knowledge specific to this engagement.
+
+| File | Answers |
+|------|---------|
+| `PROJECT_GOALS.md` | What the product is and why it exists; objectives, phases. |
+| `DOMAINS.md` | Bounded contexts and canonical entity names. |
+| `FEATURES.md` | The product surface area and user journeys. |
+| `INTEGRATIONS.md` | Which external systems this product talks to. |
+| `GLOSSARY.md` | Product-specific terminology and naming conventions. |
+| `TECH_ARCHITECTURE.md` | Runtime topology, stack, deployment shape. |
+
+**Consult for:** "what does this product do?", "what's the data model?", "which
+services does it call?", "how is it deployed?"
+
+### 2. `code-kb/` — codebase navigation (client IP)
+
+*Where things live in the code.* A hierarchical module map so agents route to the
+right module instead of grepping the whole repo.
+
+- `code-kb/<repo>/MODULES.md` — the module map + relationship diagram + entry points.
+- `code-kb/<repo>/modules/<name>/KB.md` — per-module purpose, public interface,
+  dependencies, conventions.
+- `code-kb/devops/` — CI/CD, branching, deployment, environments, and operational
+  patterns runbooks.
+
+**Consult for:** "where is X implemented?", "what does this module expose?", "how do
+we ship / branch / migrate?"
+
+### 3. `domain-kb/` — reusable domain know-how (DataArt IP)
+
+*Vendor and industry knowledge that outlives this engagement.* Strictly
+project-agnostic — it travels to the next project.
+
+| File | Contents |
+|------|----------|
+| `GLOSSARY.md` | Industry-neutral terms (JWT, ACME, ORM, CORS…). |
+| `VENDORS.md` | Per-vendor protocol facts + gotchas (PostgreSQL, SMTP, Traefik…). |
+| `PATTERNS.md` | Append-only journal of non-obvious, reusable findings. |
+
+**Consult for:** "how does this vendor/protocol behave in general?", "what's the
+reusable pattern for X?"
+
+---
+
+## The boundary rule (where does knowledge go?)
+
+| The knowledge is… | It belongs in… |
+|---|---|
+| Specific to this client/product (business rules, this stack, this data model) | **project-kb/** |
+| About *where* something lives in this repo | **code-kb/** |
+| Reusable vendor/industry know-how, no client specifics | **domain-kb/** |
+
+Litmus test: *Could this sentence help a different client's project?* If yes →
+`domain-kb`. If it names the product, client, or repo code → `project-kb`/`code-kb`.
+
+**Never put client names, repo code, secrets, or PII in `domain-kb/`.**
+
+---
+
+## How agents consume the KB
+
+Agents do **not** read this index at runtime. Each agent is wired to specific KB
+files through its `resources=` list in `workspace.py` (e.g. `PROJECT_KB`,
+`DOMAIN_KB`, `CODE_KB`). Those resources are **read on demand** — an agent opens
+`MODULES.md` (the Code Navigation Protocol) or a project-kb file when a question
+needs it, rather than having everything auto-injected into its context.
+
+This file is the **human's** map (and a status-gate / self-test artifact): it keeps
+the layers discoverable and tells contributors where new knowledge should land.
+
+---
+
+## Agents (7)
 
 Agents are in `.claude/agents/`. Detailed rules in `.claude/rules/`.
 
@@ -12,6 +96,8 @@ Agents are in `.claude/agents/`. Detailed rules in `.claude/rules/`.
 |-------|------|
 | `workshop-lead` | Tech lead / architect and single entry point for workspace-workshop. |
 | `workshop-full-stack-fastapi-template` | workshop-full-stack-fastapi-template expert (full-stack-fastapi-template repo, python). |
+| `workshop-ba` | Business Analyst for workspace-workshop. |
+| `workshop-design` | Design / wireframe agent for workspace-workshop. |
 | `workshop-devops` | DevOps agent for workspace-workshop. |
 | `workshop-domain` | Domain expert for workspace-workshop. |
 | `artisyn-ws-setup` | Artisyn Delivery Workspace setup helper. |
