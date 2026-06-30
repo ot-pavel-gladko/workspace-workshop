@@ -1,9 +1,0 @@
-name: implement-feature-agentic-adlc
-date: "2026-06-17"
-category: automation
-tags: [adlc, agentic-development, feature-delivery, orchestration, human-in-the-loop, wireframe, business-analyst, jira, github, design-first, under-construction, preview]
-summary: "[UNDER CONSTRUCTION - preview only, not yet runnable] Will teach the Agentic Development Lifecycle - taking a feature (time tracking) from idea to a reviewed PR with a team of agents, design-first (wireframe -> requirements -> implementation), human-in-the-loop at every gate. This version is description-only; the hands-on steps are still being authored and will land in a future release. Prerequisite when ready: configure-workspace-kb-and-agents."
-artifact_path: ./WORKSHOP.md
-duration: 0
-level: "02"
-prerequisites: configure-workspace-kb-and-agents (a configured workspace with 7 agents incl. design + lead Jira)
