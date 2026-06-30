@@ -1,0 +1,52 @@
+{
+  "ordered_statuses": [
+    "New",
+    "Triage",
+    "BA Review",
+    "Sprint Ready",
+    "In Progress",
+    "In Review",
+    "QA Ready",
+    "QA In Progress",
+    "UAT",
+    "Ready for Deploy",
+    "Done",
+    "Discarded"
+  ],
+  "status_to_stage": {
+    "Triage": "requirements",
+    "BA Review": "planning",
+    "Sprint Ready": "development",
+    "In Progress": "development",
+    "In Review": "review",
+    "QA Ready": "qa",
+    "QA In Progress": "qa",
+    "UAT": "qa",
+    "Ready for Deploy": "deploy",
+    "Done": "deploy",
+    "Discarded": "deploy"
+  },
+  "in_flight_statuses": [
+    "In Progress",
+    "Sprint Ready"
+  ],
+  "terminal_status": "Done",
+  "automatable_stages": [
+    "development"
+  ],
+  "hitl_stages": [
+    "deploy",
+    "planning",
+    "qa",
+    "requirements",
+    "review"
+  ],
+  "stage_assignees": {
+    "requirements": "artisyn-ba",
+    "planning": "artisyn-lead",
+    "development": "artisyn-dev",
+    "review": "artisyn-lead",
+    "qa": "artisyn-dev",
+    "deploy": "artisyn-devops"
+  }
+}

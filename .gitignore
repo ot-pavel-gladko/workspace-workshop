@@ -1,0 +1,11 @@
+!.artisyn/cache/
+!.artisyn/cache/**
+!.aila/cache/
+!.aila/cache/**
+
+.env
+
+# --- Artisyn workspace ignores ---
+.venv/
+.venv
+.artisyn/cache/

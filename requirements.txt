@@ -1,0 +1,20 @@
+# Artisyn Delivery Workspace dependencies
+# Offline installer users usually do not need this; install only if dependencies are missing.
+# Install with: uv pip install -r requirements.txt
+
+# Artisyn platform packages (artisyn-catalog-schema, artisyn-skill-sdk,
+# artisyn-skill-library) are already installed in this venv.
+
+# Runtime deps
+pyyaml>=6.0
+python-dotenv>=1.0.0
+python-hcl2>=4.3.0
+uv>=0.7.0
+
+# Code documentation (tree-sitter parsers for KNOW.md generation)
+tree-sitter>=0.21.0
+tree-sitter-java>=0.21.0
+tree-sitter-typescript>=0.21.0
+tree-sitter-c-sharp>=0.21.0
+tree-sitter-kotlin>=0.21.0
+tree-sitter-ruby>=0.21.0

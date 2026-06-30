@@ -1,0 +1,32 @@
+{
+  "_comment": "Weekly dashboard targets for artisyn-kpi dashboard (STORY-0033 / ADR-0012 §4). Overrideable per workspace — place this file at adlc/dashboard-targets.json. stage_targets_hours keys must match the status names in your adlc/status-model.json. RAG thresholds: *_max = lower-is-better (green if value <= green_max); *_min = higher-is-better (green if value >= green_min). Tune after 2-4 weeks of real baseline data.",
+  "stage_targets_hours": {
+    "New":              {"median": 48,  "p90": 120},
+    "Triage":           {"median": 24,  "p90": 72},
+    "BA Review":        {"median": 48,  "p90": 120},
+    "Sprint Ready":     {"median": 72,  "p90": 168},
+    "In Progress":      {"median": 72,  "p90": 168},
+    "In Review":        {"median": 24,  "p90": 48},
+    "QA Ready":         {"median": 24,  "p90": 72},
+    "QA In Progress":   {"median": 48,  "p90": 96},
+    "UAT":              {"median": 48,  "p90": 120},
+    "Ready for Deploy": {"median": 24,  "p90": 72}
+  },
+  "headline_targets": {
+    "throughput_per_week": {
+      "_comment": "Tickets reaching Done per ISO week. Higher is better.",
+      "green_min": 5,
+      "amber_min": 2
+    },
+    "cycle_time_days_median": {
+      "_comment": "Median cycle time (first in-flight entry -> Done) in days. Lower is better.",
+      "green_max": 5,
+      "amber_max": 10
+    },
+    "agentic_share_pct": {
+      "_comment": "Percentage of transitions performed by agents. Higher is better.",
+      "green_min": 50,
+      "amber_min": 20
+    }
+  }
+}

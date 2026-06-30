@@ -1,0 +1,250 @@
+name: artisyn-workspace-runner
+
+# Services:
+#   artisyn-lead   — one-shot manual dispatch (STORY-0007a)
+#   artisyn-watch  — long-running watch/poll mode (STORY-0007b, --watch)
+#   artisyn-ui     — Chainlit browser chat + Langfuse dashboard sidecar (STORY-0008, opt-in profile "ui")
+#   artisyn-langfuse — self-hosted Langfuse server for agent trace replay (STORY-0008, opt-in profile "ui")
+#
+# The headless artisyn-lead and artisyn-watch services work WITHOUT the "ui"
+# profile — the runtime takes NO dependency on the UI sidecar (AC6).
+#
+# Both artisyn-lead and artisyn-watch use the same image (artisyn-workspace-runner:latest)
+# and the same persistent code repo volume; manual and watch modes run one-at-a-time
+# against the shared clone — do not run both simultaneously.
+#
+# artisyn-ui shares the same image and workspace-src volume; it mounts the ui/
+# subdirectory to get the Chainlit app and its requirements.
+#
+# Volume layout:
+#   host  <workspace>/             -> /artisyn/workspace-src  (ro, rsync'd to writable copy)
+#   host  ../src/                  -> /artisyn/src-host        (ro; source of the per-repo clones)
+#   host  ~/.ssh/                  -> /artisyn/ssh-host        (ro; copied to writable ~/.ssh in-container)
+#   (volume) artisyn_code_repo     -> /artisyn/code-repo/<name> (container's OWN clones; never host copies)
+#                                     /artisyn/code-readonly/<name> (read-only copies of non-git src folders)
+#   (volume) artisyn_langfuse_db   -> internal Langfuse postgres data volume
+#
+# Usage (headless — no UI):
+#   docker compose run --rm artisyn-lead "dispatch TICKET-123"
+#   docker compose run --rm artisyn-lead "what's next"
+#   docker compose run --rm -e RUNNER_DRYRUN=1 artisyn-lead
+#   docker compose up -d artisyn-watch      # start autonomous watch loop
+#   docker compose logs -f artisyn-watch    # tail watch logs
+#   docker compose stop artisyn-watch       # stop watch loop
+#
+# Usage (with UI sidecar — opt-in):
+#   docker compose --profile ui up -d       # start artisyn-ui + artisyn-langfuse
+#   # Open http://localhost:8000  (Chainlit chat)
+#   # Open http://localhost:3000  (Langfuse traces/dashboard)
+#   docker compose --profile ui down        # stop UI sidecar
+#
+# Prefer /artisyn-workspace:run (manual), /artisyn-workspace:run --watch (watch),
+# or /artisyn-workspace:run --ui (UI sidecar) over invoking docker compose directly.
+services:
+  artisyn-lead:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: artisyn-workspace-runner:latest
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      # Permission mode: acceptEdits (default) honours settings.json allow/deny;
+      # bypassPermissions runs fully unattended (opt-in only; safe because host
+      # workspace is read-only and only the code volume is writable).
+      CLAUDE_PERMISSION_MODE: ${CLAUDE_PERMISSION_MODE:-acceptEdits}
+      # OUTPUT_FORMAT is superseded: lib.sh always uses --output-format json for cost capture (STORY-0048).
+      # Kept as a no-op for backward compat; may be removed in a future cleanup.
+      OUTPUT_FORMAT: ${OUTPUT_FORMAT:-json}
+      RUNNER_VERBOSE: ${RUNNER_VERBOSE:-1}
+      # Target code repo URL and base branch — configure in .env.
+      TARGET_REPO_URL: ${TARGET_REPO_URL:-}
+      TARGET_BASE_BRANCH: ${TARGET_BASE_BRANCH:-main}
+      # Agent-comms log directory — bind-mounted to the host for host-side access (STORY-0048 AC6).
+      AGENT_COMMS_LOG_DIR: ${AGENT_COMMS_LOG_DIR:-/artisyn/agent-comms-logs}
+    volumes:
+      # Host workspace mounted read-only; entrypoint rsync's it to a writable copy.
+      - ../../../:/artisyn/workspace-src:ro
+      # Host sibling ../src tree (the code repos) mounted read-only; entrypoint
+      # clones each git repo fresh into the code volume and copies non-git folders.
+      - ../../../../src:/artisyn/src-host:ro
+      # Host SSH identity (keys + config) mounted read-only; entrypoint copies it
+      # to a writable ~/.ssh and scans host keys so SSH clones work headlessly.
+      - ${HOME}/.ssh:/artisyn/ssh-host:ro
+      # Container's own target repo clone — persistent across runs; never touches host.
+      - artisyn_code_repo:/artisyn/code-repo
+      # Agent-comms JSONL: bind-mounted to the host workspace's .artisyn/agent-comms/ dir
+      # so per-dispatch agent communication logs are readable without docker exec (STORY-0048 AC6).
+      - ${AGENT_COMMS_LOG_HOST_PATH:-.artisyn/agent-comms}:/artisyn/agent-comms-logs
+    working_dir: /artisyn/workspace
+
+  # Watch service: long-running poll loop (STORY-0007b, --watch mode).
+  # Shares the image + clone volume with artisyn-lead; run one at a time.
+  # Tracker config (GITLAB_URL, GITLAB_PROJECT_ID, TRACKER_READY_LABEL,
+  # TRACKER_ASSIGNEE_ID, GITLAB_TOKEN, POLL_INTERVAL) set in runner/.env.
+  artisyn-watch:
+    image: artisyn-workspace-runner:latest
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      CLAUDE_PERMISSION_MODE: ${CLAUDE_PERMISSION_MODE:-acceptEdits}
+      # OUTPUT_FORMAT is superseded: lib.sh always uses --output-format json for cost capture (STORY-0048).
+      # Kept as a no-op for backward compat; may be removed in a future cleanup.
+      OUTPUT_FORMAT: ${OUTPUT_FORMAT:-json}
+      RUNNER_VERBOSE: ${RUNNER_VERBOSE:-1}
+      TARGET_REPO_URL: ${TARGET_REPO_URL:-}
+      TARGET_BASE_BRANCH: ${TARGET_BASE_BRANCH:-main}
+      # Agent-comms log directory — bind-mounted to the host for host-side access (STORY-0048 AC6).
+      AGENT_COMMS_LOG_DIR: ${AGENT_COMMS_LOG_DIR:-/artisyn/agent-comms-logs}
+      # Tracker configuration (ADR-0008/0009/0010):
+      # TRACKER_TYPE selects the backend (specs | gitlab | jira-deferred).
+      # The stage gate values below are rendered from workspace-profile.yaml
+      # automation: section by `workspace.py generate` and committed into the
+      # workspace .env.example — they reach the watch loop via this environment
+      # block so no manual copy from the workspace .env.example is needed
+      # (closes the wiring gap; STORY-0025).
+      TRACKER_TYPE: ${TRACKER_TYPE:-specs}
+      # --- Stage gate (ADR-0010 §3) ---
+      # Development stage entry status — comes from workspace-profile.yaml automation:
+      # section rendered by workspace.py generate into the workspace .env.example.
+      # The default here is the generic backward-compat value; the workspace config
+      # overrides it with the actual entry status (e.g. the cg canonical name).
+      TRACKER_READY_STATUS: ${TRACKER_READY_STATUS:-Ready-for-agent}
+      # Opt-in label gate: only tickets carrying this label are dispatched.
+      # Set to empty string to disable. Rendered from automation.require_label.
+      TRACKER_REQUIRE_LABEL: ${TRACKER_REQUIRE_LABEL:-adlc-auto}
+      # --- Canonical status names (ADR-0010 §1) ---
+      # Rendered from automation.statuses.* in workspace-profile.yaml.
+      STATUS_IN_PROGRESS: ${STATUS_IN_PROGRESS:-In Progress}
+      STATUS_IN_REVIEW: ${STATUS_IN_REVIEW:-In Review}
+      # --- Specs backend ---
+      SPECS_STORIES_DIR: ${SPECS_STORIES_DIR:-specs/STORIES}
+      SPECS_AGENTS_DIR: ${SPECS_AGENTS_DIR:-.claude/agents}
+      SPECS_LEDGER_FILE: ${SPECS_LEDGER_FILE:-/artisyn/state/dispatch-ledger.jsonl}
+      # --- GitLab backend ---
+      GITLAB_URL: ${GITLAB_URL:-https://gitlab.dataart.com}
+      GITLAB_PROJECT_ID: ${GITLAB_PROJECT_ID:-}
+      TRACKER_READY_LABEL: ${TRACKER_READY_LABEL:-ready-for-agent}
+      TRACKER_ASSIGNEE_ID: ${TRACKER_ASSIGNEE_ID:-}
+      GITLAB_TOKEN: ${GITLAB_TOKEN:-}
+      POLL_INTERVAL: ${POLL_INTERVAL:-300}
+      TRACKER_MAX_RESULTS: ${TRACKER_MAX_RESULTS:-50}
+      TRACKER_DISPATCH_TEMPLATE: ${TRACKER_DISPATCH_TEMPLATE:-}
+    volumes:
+      - ../../../:/artisyn/workspace-src:ro
+      # Host sibling ../src tree (the code repos) mounted read-only; entrypoint
+      # clones each git repo fresh into the code volume and copies non-git folders.
+      - ../../../../src:/artisyn/src-host:ro
+      # Host SSH identity (keys + config) mounted read-only; entrypoint copies it
+      # to a writable ~/.ssh and scans host keys so SSH clones work headlessly.
+      - ${HOME}/.ssh:/artisyn/ssh-host:ro
+      - artisyn_code_repo:/artisyn/code-repo
+      - artisyn_specs_state:/artisyn/state
+      # Agent-comms JSONL: bind-mounted to the host workspace's .artisyn/agent-comms/ dir
+      # so per-dispatch agent communication logs are readable without docker exec (STORY-0048 AC6).
+      - ${AGENT_COMMS_LOG_HOST_PATH:-.artisyn/agent-comms}:/artisyn/agent-comms-logs
+    working_dir: /artisyn/workspace
+    entrypoint: ["/usr/local/bin/watch.sh"]
+    restart: unless-stopped
+
+  # ---------------------------------------------------------------------------
+  # UI sidecar — OPT-IN via compose profile "ui" (STORY-0008, ADR-0004).
+  #
+  # artisyn-ui: Chainlit (Apache-2.0) browser chat that converses with the
+  #   running lead agent via the SAME dispatch path as artisyn-lead.  Supports
+  #   image and file attachments (multimodal, AC1).  Session history preserved
+  #   in the Chainlit runtime.
+  #
+  # artisyn-langfuse: self-hosted Langfuse (MIT) server for agent session/trace
+  #   replay — provides the running-agents activity view (AC3).  Langfuse traces
+  #   from artisyn-ui are sent here via LANGFUSE_HOST.
+  #
+  # The headless artisyn-lead and artisyn-watch services above have NO dependency
+  # on these services and run unchanged without the "ui" profile (AC6).
+  # ---------------------------------------------------------------------------
+
+  artisyn-ui:
+    image: artisyn-workspace-runner:latest
+    profiles:
+      - ui
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      CLAUDE_PERMISSION_MODE: ${CLAUDE_PERMISSION_MODE:-acceptEdits}
+      OUTPUT_FORMAT: ${OUTPUT_FORMAT:-text}
+      RUNNER_VERBOSE: ${RUNNER_VERBOSE:-1}
+      TARGET_REPO_URL: ${TARGET_REPO_URL:-}
+      TARGET_BASE_BRANCH: ${TARGET_BASE_BRANCH:-main}
+      # Langfuse trace sink — points at the sibling artisyn-langfuse service.
+      LANGFUSE_HOST: ${LANGFUSE_HOST:-http://artisyn-langfuse:3000}
+      LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+      LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+      # adlc cockpit URL — surfaced as an iframe link in the chat welcome (AC4).
+      ADLC_COCKPIT_URL: ${ADLC_COCKPIT_URL:-}
+      # Override workspace path constants consumed by ui/app.py.
+      WORKSPACE_SRC: /artisyn/workspace-src
+      WORKSPACE_DST: /artisyn/workspace
+    volumes:
+      - ../../../:/artisyn/workspace-src:ro
+      # Host sibling ../src tree (the code repos) mounted read-only; entrypoint
+      # clones each git repo fresh into the code volume and copies non-git folders.
+      - ../../../../src:/artisyn/src-host:ro
+      # Host SSH identity (keys + config) mounted read-only; entrypoint copies it
+      # to a writable ~/.ssh and scans host keys so SSH clones work headlessly.
+      - ${HOME}/.ssh:/artisyn/ssh-host:ro
+      - artisyn_code_repo:/artisyn/code-repo
+      # Mount ui/ so chainlit can find app.py and install requirements at startup.
+      - ./ui:/artisyn/ui:ro
+    working_dir: /artisyn/workspace
+    ports:
+      - "${UI_PORT:-8000}:8000"
+    entrypoint: ["/usr/local/bin/ui-entrypoint.sh"]
+    restart: unless-stopped
+    depends_on:
+      - artisyn-langfuse
+
+  artisyn-langfuse:
+    # Langfuse v2 runs on Postgres ALONE — the right fit for a single-operator
+    # local trace-replay appliance. (v3 hard-requires ClickHouse + Redis + S3,
+    # which is disproportionate here; bump to a full v3 stack only if this ever
+    # graduates beyond a local sidecar.) Pinned per ADR-0005 version governance.
+    image: langfuse/langfuse:2
+    profiles:
+      - ui
+    environment:
+      # Langfuse reads these EXACT env var names (not LANGFUSE_*-prefixed).
+      # Defaults are dev-only placeholders; override NEXTAUTH_SECRET + SALT in
+      # runner/.env for a persistent/shared install (changing SALT invalidates
+      # existing API keys).
+      DATABASE_URL: postgresql://langfuse:langfuse@artisyn-langfuse-db:5432/langfuse
+      # NEXTAUTH_URL must be the BROWSER-facing URL (not the internal docker
+      # hostname), or login/redirects break.
+      NEXTAUTH_URL: http://localhost:${LANGFUSE_PORT:-3000}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-dev-nextauth-secret-change-me}
+      SALT: ${LANGFUSE_SALT:-dev-langfuse-salt-change-me}
+      TELEMETRY_ENABLED: "false"
+    ports:
+      - "${LANGFUSE_PORT:-3000}:3000"
+    depends_on:
+      - artisyn-langfuse-db
+    restart: unless-stopped
+
+  artisyn-langfuse-db:
+    image: postgres:16
+    profiles:
+      - ui
+    environment:
+      POSTGRES_USER: langfuse
+      POSTGRES_PASSWORD: langfuse
+      POSTGRES_DB: langfuse
+    volumes:
+      - artisyn_langfuse_db:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  artisyn_code_repo:
+  artisyn_specs_state:
+  artisyn_langfuse_db:

@@ -1,0 +1,74 @@
+[
+  {
+    "name": "aila-catalog-sdk",
+    "description": null
+  },
+  {
+    "name": "workspace-management",
+    "description": "Kiro workspace lifecycle \u2014 define, generate, catalog, publish"
+  },
+  {
+    "name": "generic-sdlc",
+    "description": null
+  },
+  {
+    "name": "lead-orchestration",
+    "description": null
+  },
+  {
+    "name": "extract-project-kb",
+    "description": null
+  },
+  {
+    "name": "extract-domain-kb",
+    "description": null
+  },
+  {
+    "name": "review-domain-kb",
+    "description": null
+  },
+  {
+    "name": "extract-code-kb",
+    "description": null
+  },
+  {
+    "name": "decompose-initiative",
+    "description": null
+  },
+  {
+    "name": "decompose-epic",
+    "description": null
+  },
+  {
+    "name": "estimate-story",
+    "description": null
+  },
+  {
+    "name": "author-adr",
+    "description": null
+  },
+  {
+    "name": "author-story",
+    "description": null
+  },
+  {
+    "name": "author-bug",
+    "description": null
+  },
+  {
+    "name": "skill-management-aila",
+    "description": null
+  },
+  {
+    "name": "workspace-audit",
+    "description": null
+  },
+  {
+    "name": "workspace-agents-refine",
+    "description": null
+  },
+  {
+    "name": "workshop-executor",
+    "description": null
+  }
+]

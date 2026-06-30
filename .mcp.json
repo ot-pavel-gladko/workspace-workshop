@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "github": {
+      "type": "stdio",
+      "command": "bash",
+      "args": [
+        "-c",
+        "set -a; source .env 2>/dev/null; set +a; export GITHUB_PERSONAL_ACCESS_TOKEN=\"${GITHUB_TOKEN}\"; exec npx -y @modelcontextprotocol/server-github"
+      ],
+      "env": {}
+    }
+  }
+}

@@ -1,0 +1,3 @@
+# adlc/ — KPI tooling generated into the workspace at `workspace.py generate` time.
+# The SQLite event store is runtime data; never commit it.
+kpi-events.db

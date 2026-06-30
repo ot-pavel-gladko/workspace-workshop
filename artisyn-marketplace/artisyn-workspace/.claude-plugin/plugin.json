@@ -1,0 +1,27 @@
+{
+  "name": "artisyn-workspace",
+  "description": "Artisyn Delivery Workspace \u2014 install, update, and manage DataArt Artisyn platform releases, browse the skill catalog, and track setup progress without leaving Claude Code.",
+  "version": "0.0.0",
+  "author": {
+    "name": "DataArt Artisyn"
+  },
+  "license": "Proprietary - DataArt Core IP",
+  "keywords": [
+    "artisyn",
+    "aila",
+    "workspace",
+    "dataart",
+    "internal",
+    "skills"
+  ],
+  "commands": [
+    "./commands/install.md",
+    "./commands/activate.md",
+    "./commands/init-profile.md",
+    "./commands/update.md",
+    "./commands/skills.md",
+    "./commands/status.md",
+    "./commands/help.md",
+    "./commands/run.md"
+  ]
+}

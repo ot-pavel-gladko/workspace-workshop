@@ -1,0 +1,110 @@
+schema_version: 1
+project:
+  name: workspace-workshop
+  description: workspace-workshop workspace
+  src_dir: ../src
+  repos_file: repos.txt
+  repo_discovery: src_scan
+repos:
+- name: full-stack-fastapi-template
+  path: ../src/full-stack-fastapi-template
+  role: python
+  monorepo: null
+  tool_tier: code
+  agent_name_override: workshop-full-stack-fastapi-template
+  agent_description: workshop-full-stack-fastapi-template expert (full-stack-fastapi-template
+    repo, python).
+  model: sonnet
+mcp:
+  atlassian:
+    enabled: false
+    jira_enabled: false
+    confluence_enabled: false
+    jira_url: https://support.dataart.com
+    confluence_url: https://conf.dataart.com
+    ssl_verify: false
+    jira_pat_env: JIRA_PERSONAL_TOKEN
+    confluence_pat_env: CONFLUENCE_PERSONAL_TOKEN
+  gitlab:
+    enabled: false
+    url: https://gitlab.dataart.com
+    pat_env: GITLAB_PERSONAL_ACCESS_TOKEN
+    devops_extras: false
+  azure_devops:
+    enabled: false
+    org_url: ''
+    project: ''
+    pat_env: AZURE_DEVOPS_PAT
+  github:
+    enabled: true
+    pat_env: GITHUB_TOKEN
+  figma:
+    enabled: false
+    url: http://127.0.0.1:3845/mcp
+agents:
+  include_ba: false
+  include_devops: true
+  include_design: false
+  include_domain: true
+  include_pm: false
+  lead_model: opus
+kb_seeds:
+  project_goals: TODO
+  domains: []
+  integrations: []
+  tech_architecture: []
+agent_engine: claude
+validation:
+  skip: false
+host:
+  os: linux
+  shell: bash
+  python: python3
+  venv_activate: source .venv/bin/activate
+automation:
+  enabled: true
+  tracker: specs
+  poll_interval: 300
+  require_label: adlc-auto
+  statuses:
+    new: New
+    triage: Triage
+    ba_review: BA Review
+    sprint_ready: Sprint Ready
+    in_progress: In Progress
+    in_review: In Review
+    qa_ready: QA Ready
+    qa_in_progress: QA In Progress
+    uat: UAT
+    ready_for_deploy: Ready for Deploy
+    done: Done
+    discarded: Discarded
+  stages:
+    requirements:
+      enabled: false
+      entry_status: Triage
+      default_assignee: artisyn-ba
+    planning:
+      enabled: false
+      entry_status: BA Review
+      default_assignee: artisyn-lead
+    development:
+      enabled: true
+      entry_status: Sprint Ready
+      default_assignee: artisyn-dev
+    review:
+      enabled: false
+      entry_status: In Review
+      default_assignee: artisyn-lead
+    qa:
+      enabled: false
+      entry_status: QA Ready
+      default_assignee: artisyn-dev
+    deploy:
+      enabled: false
+      entry_status: Ready for Deploy
+      default_assignee: artisyn-devops
+git_init: true
+extra_skills:
+- name: workshop-executor
+  provider_name: artisyn-skill-library

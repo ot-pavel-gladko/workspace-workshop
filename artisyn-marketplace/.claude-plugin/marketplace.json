@@ -1,0 +1,31 @@
+{
+  "name": "artisyn",
+  "owner": {
+    "name": "DataArt Artisyn"
+  },
+  "metadata": {
+    "description": "DataArt internal Claude marketplace for Artisyn Delivery Workspace tooling.",
+    "version": "0.0.0"
+  },
+  "plugins": [
+    {
+      "name": "artisyn-workspace",
+      "source": "./artisyn-workspace",
+      "description": "Artisyn Delivery Workspace \u2014 Claude Code commands for installing, updating, and managing releases of DataArt's Artisyn Delivery Workspace platform, browsing the skill catalog, and tracking setup progress.",
+      "version": "0.0.0",
+      "author": {
+        "name": "DataArt Artisyn"
+      },
+      "keywords": [
+        "artisyn",
+        "aila",
+        "workspace",
+        "dataart",
+        "internal",
+        "skills"
+      ],
+      "category": "tooling",
+      "strict": false
+    }
+  ]
+}
